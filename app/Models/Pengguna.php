@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Pengguna extends Model
+class Pengguna extends Authenticatable
 {
+    use HasFactory, Notifiable, HasApiTokens;
     //
     protected $table = 'pengguna';
     protected $primaryKey = 'pengguna_id';
@@ -23,5 +28,17 @@ class Pengguna extends Model
 
     public function keranjang(){
         return $this->hasMany(Keranjang::class, 'pengguna_id');
+    }
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array{
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }
