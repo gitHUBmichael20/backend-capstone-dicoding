@@ -1,0 +1,254 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans";
+  }
+
+  body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+
+  .auth-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Left Panel Styles */
+  .auth-left-panel {
+    width: 40%;
+    height: 100%;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #fff;
+  }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .back-link i {
+    margin-right: 8px;
+  }
+
+  .logo-container {
+    margin: 10px 0 30px;
+  }
+
+  .modena-logo {
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .auth-form-container {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 15px;
+    color: #777;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+  }
+
+  /* Phone input specific styles */
+  .phone-container .input-field {
+    padding-left: 15px; /* Override the padding for phone input */
+  }
+
+  .phone-prefix {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #ddd;
+    height: 100%;
+    min-width: 70px;
+    justify-content: space-between;
+  }
+
+  .phone-prefix span {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+
+  .phone-input {
+    flex: 1;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #777;
+  }
+
+  .auth-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #1E88E5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .auth-button:hover {
+    background-color: #1976D2;
+  }
+
+  .forgot-password {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .forgot-password a {
+    color: #1E88E5;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+  }
+
+  .separator::before,
+  .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .separator span {
+    padding: 0 15px;
+    color: #888;
+    font-size: 14px;
+  }
+
+  .social-button {
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .social-button:hover {
+    background-color: #f5f5f5;
+  }
+
+  .social-icon {
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  .auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .auth-footer a {
+    color: #1E88E5;
+    text-decoration: none;
+  }
+
+  /* Right Panel Styles */
+  .auth-right-panel {
+    width: 60%;
+    height: 100%;
+    background-image: url('kitchen-image-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .auth-left-panel {
+      width: 100%;
+    }
+
+    .auth-right-panel {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .auth-left-panel {
+      padding: 20px;
+    }
+
+    .auth-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      padding: 12px 12px 12px 40px;
+    }
+  }

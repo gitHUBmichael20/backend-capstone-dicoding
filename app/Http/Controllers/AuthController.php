@@ -15,7 +15,7 @@ class AuthController extends Controller
             'nama_pengguna' => 'required|string|max:255',
             'nomor_telepon' => 'required|string|max:15',
             'email' => 'required|string|email|max:255|unique:pengguna',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|',
         ]);
 
         $pengguna = Pengguna::create([
