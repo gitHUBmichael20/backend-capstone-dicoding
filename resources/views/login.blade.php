@@ -23,18 +23,18 @@
       <div class="auth-form-container">
         <h2 class="auth-title">Masuk</h2>
 
-        <form>
+        <form method="POST" action="{{ url('/api/login') }}">
           <div class="input-group">
             <div class="input-container">
               <i class="fa-solid fa-user input-icon"></i>
-              <input type="text" placeholder="Email atau No HP" class="input-field">
+              <input type="text" placeholder="Email atau No HP" class="input-field" name="email">
             </div>
           </div>
 
           <div class="input-group">
             <div class="input-container">
               <i class="fa-solid fa-lock input-icon"></i>
-              <input type="password" placeholder="Kata Sandi" class="input-field">
+              <input type="password" placeholder="Kata Sandi" class="input-field" name="password">
               <button type="button" class="password-toggle">
                 <i class="fa-solid fa-eye"></i>
               </button>

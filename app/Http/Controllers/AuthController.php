@@ -46,11 +46,7 @@ class AuthController extends Controller
         $pengguna = Auth::user();
         $token = $pengguna->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login Berhasil',
-            'pengguna' => $pengguna,
-            'token' => $token
-        ], 200);
+        return view('landing');
     }
 
     public function logout(Request $request){
