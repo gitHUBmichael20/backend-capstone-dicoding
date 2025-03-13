@@ -6,8 +6,33 @@
   <title>SatoePinjam - Masuk</title>
   <link rel="stylesheet" href="{{ asset('css/login-singup.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: "Berhasil membuat akun! Silahkan login.",
+                showConfirmButton: false,
+                timer: 2500
+            });
+        });
+    </script> --}}
+
+        @if (session('success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            });
+            </script>
+        @endif
+
   <div class="auth-container">
     <!-- Left Panel (Login Form) -->
     <div class="auth-left-panel">
@@ -57,7 +82,7 @@
           </button> -->
 
           <div class="auth-footer">
-            Belum memiliki akun? <a href="{{ route('/signup') }}">Daftar</a>
+            Belum memiliki akun? <a href="{{ route('signup') }}">Daftar</a>
           </div>
         </form>
       </div>
