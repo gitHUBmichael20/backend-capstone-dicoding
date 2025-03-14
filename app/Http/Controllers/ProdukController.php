@@ -9,12 +9,12 @@ class ProdukController extends Controller
 {
     //
     public function index() {
-        $data = Produk::all();
-        return $data;
+        $produk = Produk::all();
+        return response()->json($produk);
     }
 
     public function detailProduk($id) {
         $data = Produk::find($id);
-        return $data;
+        return view('detail_produk', ['produk' => $data]);
     }
 }

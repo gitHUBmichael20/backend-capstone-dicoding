@@ -6,12 +6,25 @@
   <title>SatoePinjam - Daftar</title>
   <link rel="stylesheet" href="{{ asset('css/login-singup.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
+    @if (session('failed'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('failed') }}',
+            showConfirmButton: false,
+            timer: 2500
+        });
+    </script>
+    @endif
+
   <div class="auth-container">
     <!-- Left Panel (Sign Up Form) -->
     <div class="auth-left-panel">
-      <a href="{{ route('/login') }}" class="back-link">
+      <a href="{{ route('login') }}" class="back-link">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke login page
       </a>
 

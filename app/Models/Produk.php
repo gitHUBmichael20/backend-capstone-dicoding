@@ -12,7 +12,9 @@ class Produk extends Model
     protected $fillable = [
         'nama_produk',
         'deskripsi',
-        'stok'
+        'stok',
+        'biaya_sewa',
+        'kategori'
     ];
 
     public function detailPeminjamans()
