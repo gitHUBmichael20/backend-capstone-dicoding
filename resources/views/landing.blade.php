@@ -1,88 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
     <title>Welcome To Pinjam Satoe</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-
 <body>
-
-
-    {{-- <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Pinjam Satoe</span>
-            </a>
-            <button data-collapse-toggle="navbar-default" type="button"
-                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul
-                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                            aria-current="page">Home</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> --}}
-
-
-
-
-    <section
-        class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
+    <section class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h1>
-            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Here at Flowbite we focus on
-                markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+            <h1 class="mb-4 text-3xl font-bold tracking-tight leading-none text-white md:text-4xl lg:text-5xl">Selamat datang, {{ auth()->user() ? auth()->user()->nama_pengguna ?? 'pengguna' : 'pengguna' }}</h1>
+            <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h2>
+            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+                Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
             </p>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <a href="#dashboard"
-                    class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                <a href="#dashboard" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                     Get started
-                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                     </svg>
                 </a>
-                <a href="#"
-                    class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
+                <a href="#" class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
                     Learn more
                 </a>
             </div>
@@ -113,12 +58,16 @@
                             <i class="fas fa-shopping-cart"></i>
                             <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                         </a>
-                        <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
-                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                        @if(auth()->check())
+                            <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
+                        @else
+                            <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
+                            <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                        @endif
                     </div>
 
                     <!-- Mobile Menu Button -->
-                    <button class="md:hidden text-gray-600">
+                    <button class="md:hidden text-gray-600" id="open-menu">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -128,6 +77,7 @@
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Produk Untuk Disewa</h1>
+            <div id="user-data" class="mb-6"></div>
 
             <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
                 <!-- Filters Sidebar -->
@@ -235,32 +185,9 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="containerProduk">
-
-                        <!-- Product Card 1 -->
-                        {{-- <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                            <div class="relative">
-                                <img src="/api/placeholder/300/200" alt="Blender Phillips" class="w-full h-48 object-cover">
-                                <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-gray-800">Blender Phillips HR2157</h3>
-                                <div class="flex text-yellow-400 my-1">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span class="ml-1 text-gray-600 text-sm">(48)</span>
-                                </div>
-                                <p class="text-sm text-gray-600 mb-2">Peralatan Dapur</p>
-                                <div class="flex justify-between items-center mt-3">
-                                    <p class="text-emerald-600 font-bold">Rp25.000/hari</p>
-                                    <button class="bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700 transition">+ Keranjang</button>
-                                </div>
-                            </div>
-                        </div> --}}
-
+                    <div id="containerProduk" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                        <!-- Produk akan diisi via JS dari /api/produk -->
+                    </div>
 
                     <!-- Pagination -->
                     <div class="mt-8 flex justify-center">
@@ -357,7 +284,7 @@
                 <hr class="border-gray-700 my-8">
 
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 SatoeRental. Hak Cipta Dilindungi.</p>
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 SatoeRental. Hak Cipta Dilindungi.</p>
                     <div class="flex space-x-6">
                         <a href="#" class="text-gray-400 hover:text-white transition">Syarat & Ketentuan</a>
                         <a href="#" class="text-gray-400 hover:text-white transition">Kebijakan Privasi</a>
@@ -380,44 +307,156 @@
                 <a href="/about" class="text-white hover:text-emerald-400 transition">Tentang Kami</a>
                 <a href="/contact" class="text-white hover:text-emerald-400 transition">Kontak</a>
                 <div class="pt-6 border-t border-gray-700 flex flex-col items-center space-y-4 w-1/2">
-                    <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
-                    <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
+                    @if(auth()->check())
+                        <button id="mobile-logout" class="bg-emerald-600 text-white hover:text-emerald-400 transition w-full text-center">Logout</button>
+                    @else
+                        <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
+                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
+                    @endif
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- <footer class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
-        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-            <div class="sm:flex sm:items-center sm:justify-between">
-                <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-                </a>
-                <ul
-                    class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">About</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-            <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
-                    href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
-        </div>
-    </footer> --}}
+    <script>
+        // Toggle Mobile Menu
+        const openMenu = document.getElementById('open-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
 
+        openMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
 
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
 
+        // Autentikasi dan API
+        const token = "{{ session('api_token') }}";
+        console.log('Token in landing:', token);
+
+        // Ambil data user
+        if (token) {
+            axios.get('/api/user', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(response => {
+                document.getElementById('user-data').innerHTML = `Email: ${response.data.email} | Nomor Telepon: ${response.data.nomor_telepon}`;
+            })
+            .catch(error => console.error('Error fetching user:', error));
+        }
+
+        // Logout (Desktop)
+        const logoutButton = document.getElementById('logout');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                axios.post('/api/logout', {}, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                .then(response => {
+                    window.location.href = '/login';
+                })
+                .catch(error => console.error('Error logging out:', error));
+            });
+        }
+
+        // Logout (Mobile)
+        const mobileLogoutButton = document.getElementById('mobile-logout');
+        if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener('click', function() {
+                axios.post('/api/logout', {}, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                .then(response => {
+                    window.location.href = '/login';
+                })
+                .catch(error => console.error('Error logging out:', error));
+            });
+        }
+
+        // Ambil produk
+        if (token) {
+            axios.get('/api/produk', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(response => {
+                const container = document.getElementById('containerProduk');
+                // Misalnya response.data adalah array produk
+                // Tambah logika untuk render produk di sini
+            })
+            .catch(error => console.error('Error fetching products:', error));
+        }
+    </script>
+<script>
+    async function fetchProduk() {
+        try {
+            const token = "{{ session('api_token') }}";
+            const response = await axios.get('/api/produk', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            const data = response.data; // Parsing response sebagai JSON
+            console.log(data); // Debug: cek data dari API
+            const produkContainer = document.getElementById('containerProduk');
+
+            produkContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan produk baru
+
+            data.forEach(item => {
+                const produkDiv = document.createElement('div');
+                produkDiv.classList.add(
+                    'bg-white', 
+                    'rounded-lg', 
+                    'shadow-md', 
+                    'overflow-hidden', 
+                    'hover:shadow-lg', 
+                    'transition', 
+                    'cursor-pointer', 
+                    'flex', 
+                    'flex-col', 
+                    'w-full', 
+                    'max-w-sm', // Lebar card (384px)
+                    'h-[350px]' // Tinggi tetap untuk card
+                );
+                produkDiv.id = `produk-${item.produk_id}`;
+                produkDiv.innerHTML = `
+                    <div class="relative w-full h-48 overflow-hidden">
+                        <img src="${item.gambar_produk ? '/storage/produk/' + item.gambar_produk : '/storage/produk/no_image.png'}" alt="${item.nama_produk}" class="w-full h-full object-cover object-center border border-gray-300 rounded-md" loading="lazy" onerror="this.src='/storage/produk/no_image.png'">
+                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
+                    </div>
+                    <div class="p-3 flex flex-col flex-1">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 truncate">${item.nama_produk}</h3>
+                            <div class="flex text-yellow-400 my-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ml-1 text-gray-600 text-sm">(48)</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-1 truncate">${item.kategori}</p>
+                        </div>
+                            <p class="text-emerald-600 font-bold mt-2 items-center">Rp${item.biaya_sewa}/hari</p>
+                    </div>
+                `;
+
+                produkDiv.addEventListener('click', () => {
+                    window.location.href = `/detail-produk/${item.produk_id}`;
+                });
+
+                produkContainer.appendChild(produkDiv); // Tambahkan produk ke dalam kontainer
+            });
+
+            if (data.length === 0) {
+                produkContainer.innerHTML = '<p class="text-gray-600 text-center">Belum ada produk yang tersedia.</p>';
+            }
+        } catch (error) {
+            console.error('Gagal mengambil data produk:', error);
+        }
+    }
+
+    // Panggil fungsi ketika halaman sudah dimuat
+    document.addEventListener('DOMContentLoaded', fetchProduk);
+</script>
 </body>
-
 </html>

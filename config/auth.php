@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'pengguna'),
     ],
 
     /*
@@ -38,7 +38,15 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'pengguna',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'sanctum' => [
+            'driver' => 'sanctum',
+            'provider' => 'pengguna',
         ],
     ],
 
@@ -60,9 +68,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'pengguna' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Pengguna::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -91,9 +103,15 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'pengguna' => [
+            'provider' => 'pengguna',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
