@@ -15,10 +15,10 @@ class PenggunaSeeder extends Seeder
         DB::disableQueryLog();
 
         $faker = Faker::create('id_ID');
-        $batchSize = 50;
+        $batchSize = 100; // Increased to 100 for faster inserts
         $totalRecords = 50000;
         $data = [];
-        $reportInterval = 10;
+        $reportInterval = 10; // Report every 10 records
 
         for ($i = 0; $i < $totalRecords; $i++) {
             $data[] = [
@@ -39,7 +39,7 @@ class PenggunaSeeder extends Seeder
                 $data = []; // Clear the array
             }
 
-            // Report progress every 100 records
+            // Report progress every 10 records
             if (($i + 1) % $reportInterval === 0) {
                 $this->command->info("Seeded pengguna: " . ($i + 1) . " records");
             }
