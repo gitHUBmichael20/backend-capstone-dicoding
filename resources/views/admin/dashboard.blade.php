@@ -78,6 +78,7 @@
             <div id="dashboard" class="content-section active">
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Dashboard Overview</h1>
                 <p class="text-gray-600 dark:text-gray-400">Welcome back, Admin! Here's your summary for today.</p>
+                @include('admin.analytics')
             </div>
 
             <!-- Inbox Section -->
