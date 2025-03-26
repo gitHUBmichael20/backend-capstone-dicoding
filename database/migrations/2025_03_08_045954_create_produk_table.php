@@ -20,8 +20,8 @@ return new class extends Migration
                 'Peralatan Kebersihan',
                 'Perabotan',
                 'Elektronik',
-                'Dekorasi'
-            ])->nullable(false);            
+                'Dekorasi',
+            ])->nullable(false);
             $table->text('deskripsi')->nullable();
             $table->integer('stok')->nullable(false);
             $table->integer('biaya_sewa')->nullable(false);

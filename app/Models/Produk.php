@@ -8,14 +8,16 @@ class Produk extends Model
 {
     //
     protected $table = 'produk';
+
     protected $primaryKey = 'produk_id';
+
     protected $fillable = [
         'nama_produk',
         'gambar_produk',
         'deskripsi',
         'stok',
         'biaya_sewa',
-        'kategori'
+        'kategori',
     ];
 
     public function detailPeminjamans()

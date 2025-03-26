@@ -7,16 +7,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
     <title>Welcome To Pinjam Satoe</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
+    <!-- Hero Section -->
     <section class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-3xl font-bold tracking-tight leading-none text-white md:text-4xl lg:text-5xl">Selamat datang, {{ auth()->user() ? auth()->user()->nama_pengguna ?? 'pengguna' : 'pengguna' }}</h1>
+            <h1 class="mb-4 text-3xl font-bold tracking-tight leading-none text-white md:text-4xl lg:text-5xl">
+                Selamat datang, {{ auth()->user() ? auth()->user()->nama_pengguna ?? 'pengguna' : 'pengguna' }}
+            </h1>
             <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h2>
+                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini
+            </h2>
             <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
             </p>
@@ -34,7 +37,9 @@
         </div>
     </section>
 
+    <!-- Dashboard Section -->
     <section class="bg-gray-100" id="dashboard">
+        <!-- Header -->
         <header class="bg-white shadow-md sticky top-0 z-40">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
@@ -77,7 +82,7 @@
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Produk Untuk Disewa</h1>
-            <div id="user-data" class="mb-6"></div>
+            <div id="user-data" class="mb-6 text-gray-600"></div>
 
             <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
                 <!-- Filters Sidebar -->
@@ -87,22 +92,22 @@
 
                         <div class="mb-4">
                             <label class="block text-gray-700 mb-2 font-medium">Kategori</label>
-                            <select class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <select id="filter-kategori" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 <option value="">Semua Kategori</option>
-                                <option value="1">Peralatan Dapur</option>
-                                <option value="2">Peralatan Kebersihan</option>
-                                <option value="3">Perabotan</option>
-                                <option value="4">Elektronik</option>
-                                <option value="5">Dekorasi</option>
+                                <option value="Peralatan Dapur">Peralatan Dapur</option>
+                                <option value="Peralatan Kebersihan">Peralatan Kebersihan</option>
+                                <option value="Perabotan">Perabotan</option>
+                                <option value="Elektronik">Elektronik</option>
+                                <option value="Dekorasi">Dekorasi</option>
                             </select>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-gray-700 mb-2 font-medium">Harga Per Hari</label>
                             <div class="flex items-center gap-2">
-                                <input type="number" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <input type="number" id="filter-harga-min" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 <span>-</span>
-                                <input type="number" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <input type="number" id="filter-harga-max" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                             </div>
                         </div>
 
@@ -110,15 +115,15 @@
                             <label class="block text-gray-700 mb-2 font-medium">Ketersediaan</label>
                             <div class="space-y-2">
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-tersedia" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <span>Tersedia Sekarang</span>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-pengiriman-gratis" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <span>Pengiriman Gratis</span>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-promo" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <span>Promo</span>
                                 </label>
                             </div>
@@ -128,7 +133,7 @@
                             <label class="block text-gray-700 mb-2 font-medium">Rating</label>
                             <div class="space-y-2">
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-rating-5" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <div class="flex text-yellow-400">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -138,7 +143,7 @@
                                     </div>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-rating-4" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <div class="flex text-yellow-400">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -149,7 +154,7 @@
                                     </div>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                    <input type="checkbox" id="filter-rating-3" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
                                     <div class="flex text-yellow-400">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -162,7 +167,7 @@
                             </div>
                         </div>
 
-                        <button class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
+                        <button id="apply-filter" class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
                             Terapkan Filter
                         </button>
                     </div>
@@ -171,39 +176,22 @@
                 <!-- Product List -->
                 <div class="lg:w-3/4">
                     <div class="flex justify-between items-center mb-6">
-                        <p class="text-gray-600">Menampilkan 24 dari 156 produk</p>
+                        <p id="product-count" class="text-gray-600">Menampilkan 0 dari 0 produk</p>
 
                         <div class="flex items-center space-x-2">
                             <label class="text-gray-700">Urutkan:</label>
-                            <select class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <option>Terpopuler</option>
-                                <option>Harga: Rendah ke Tinggi</option>
-                                <option>Harga: Tinggi ke Rendah</option>
-                                <option>Rating Tertinggi</option>
-                                <option>Terbaru</option>
+                            <select id="sort-products" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <option value="popular">Terpopuler</option>
+                                <option value="price-low-high">Harga: Rendah ke Tinggi</option>
+                                <option value="price-high-low">Harga: Tinggi ke Rendah</option>
+                                <option value="rating">Rating Tertinggi</option>
+                                <option value="newest">Terbaru</option>
                             </select>
                         </div>
                     </div>
 
                     <div id="containerProduk" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                         <!-- Produk akan diisi via JS dari /api/produk -->
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="mt-8 flex justify-center">
-                        <nav class="flex items-center space-x-1">
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                            <a href="#" class="px-3 py-2 rounded-md bg-emerald-600 text-white">1</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">2</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">3</a>
-                            <span class="px-3 py-2 text-gray-500">...</span>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">8</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -318,6 +306,7 @@
         </div>
     </section>
 
+    <!-- JavaScript -->
     <script>
         // Toggle Mobile Menu
         const openMenu = document.getElementById('open-menu');
@@ -332,32 +321,36 @@
             mobileMenu.classList.add('hidden');
         });
 
-        // Autentikasi dan API
-        const token = "{{ session('api_token') }}";
-        console.log('Token in landing:', token);
-
-        // Ambil data user
-        if (token) {
-            axios.get('/api/user', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            })
-            .then(response => {
-                document.getElementById('user-data').innerHTML = `Email: ${response.data.email} | Nomor Telepon: ${response.data.nomor_telepon}`;
-            })
-            .catch(error => console.error('Error fetching user:', error));
-        }
-
         // Logout (Desktop)
         const logoutButton = document.getElementById('logout');
         if (logoutButton) {
             logoutButton.addEventListener('click', function() {
-                axios.post('/api/logout', {}, {
+                const token = "{{ session('api_token') }}";
+                console.log('Attempting logout with token:', token);
+
+                if (!token) {
+                    console.log('No token found, redirecting to login');
+                    window.location.href = '/login';
+                    return;
+                }
+
+                axios.post('/logout', {}, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 })
                 .then(response => {
-                    window.location.href = '/login';
+                    console.log('Logout success:', response.data);
+                    // Hapus token dari session di sisi client
+                    sessionStorage.removeItem('api_token');
+                    localStorage.removeItem('user_id');
+                    window.location.href = '/landing';
                 })
-                .catch(error => console.error('Error logging out:', error));
+                .catch(error => {
+                    console.error('Error logging out:', error.response ? error.response.data : error.message);
+                    // Jika gagal, tetap hapus token dan redirect
+                    sessionStorage.removeItem('api_token');
+                    localStorage.removeItem('user_id');
+                    window.location.href = '/';
+                });
             });
         }
 
@@ -365,98 +358,166 @@
         const mobileLogoutButton = document.getElementById('mobile-logout');
         if (mobileLogoutButton) {
             mobileLogoutButton.addEventListener('click', function() {
-                axios.post('/api/logout', {}, {
+                const token = "{{ session('api_token') }}";
+                console.log('Attempting mobile logout with token:', token);
+
+                if (!token) {
+                    console.log('No token found, redirecting to login');
+                    window.location.href = '/login';
+                    return;
+                }
+
+                axios.post('/logout', {}, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 })
                 .then(response => {
+                    console.log('Mobile logout success:', response.data);
+                    // Hapus token dari session di sisi client
+                    sessionStorage.removeItem('api_token');
+                    localStorage.removeItem('user_id');
                     window.location.href = '/login';
                 })
-                .catch(error => console.error('Error logging out:', error));
+                .catch(error => {
+                    console.error('Error logging out (mobile):', error.response ? error.response.data : error.message);
+                    // Jika gagal, tetap hapus token dan redirect
+                    sessionStorage.removeItem('api_token');
+                    localStorage.removeItem('user_id');
+                    window.location.href = '/login';
+                });
             });
         }
 
-        // Ambil produk
+        // Ambil data user (opsional, hanya jika user login)
+        const token = "{{ session('api_token') }}";
         if (token) {
-            axios.get('/api/produk', {
+            axios.get('/api/user', {
                 headers: { 'Authorization': 'Bearer ' + token }
             })
             .then(response => {
-                const container = document.getElementById('containerProduk');
-                // Misalnya response.data adalah array produk
-                // Tambah logika untuk render produk di sini
+                document.getElementById('user-data').innerHTML = `Email: ${response.data.email} | Nomor Telepon: ${response.data.nomor_telepon ?? 'Tidak tersedia'}`;
             })
-            .catch(error => console.error('Error fetching products:', error));
+            .catch(error => console.error('Error fetching user:', error));
         }
-    </script>
-<script>
-    async function fetchProduk() {
-        try {
-            const token = "{{ session('api_token') }}";
-            const response = await axios.get('/api/produk', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            });
-            const data = response.data; // Parsing response sebagai JSON
-            console.log(data); // Debug: cek data dari API
-            const produkContainer = document.getElementById('containerProduk');
 
-            produkContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan produk baru
+        // Ambil produk via API (tanpa token, karena halaman bisa diakses tanpa login)
+        async function fetchProduk(filters = {}) {
+            try {
+                // Buat query string berdasarkan filter
+                const params = new URLSearchParams(filters).toString();
+                const url = params ? `/api/produk?${params}` : '/api/produk';
+                const response = await axios.get(url);
+                let data = response.data;
+                console.log(data);
+                const produkContainer = document.getElementById('containerProduk');
+                const productCount = document.getElementById('product-count');
 
-            data.forEach(item => {
-                const produkDiv = document.createElement('div');
-                produkDiv.classList.add(
-                    'bg-white', 
-                    'rounded-lg', 
-                    'shadow-md', 
-                    'overflow-hidden', 
-                    'hover:shadow-lg', 
-                    'transition', 
-                    'cursor-pointer', 
-                    'flex', 
-                    'flex-col', 
-                    'w-full', 
-                    'max-w-sm', // Lebar card (384px)
-                    'h-[350px]' // Tinggi tetap untuk card
-                );
-                produkDiv.id = `produk-${item.produk_id}`;
-                produkDiv.innerHTML = `
-                    <div class="relative w-full h-48 overflow-hidden">
-                        <img src="${item.gambar_produk ? '/storage/produk/' + item.gambar_produk : '/storage/produk/no_image.png'}" alt="${item.nama_produk}" class="w-full h-full object-cover object-center border border-gray-300 rounded-md" loading="lazy" onerror="this.src='/storage/produk/no_image.png'">
-                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
-                    </div>
-                    <div class="p-3 flex flex-col flex-1">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800 truncate">${item.nama_produk}</h3>
-                            <div class="flex text-yellow-400 my-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="ml-1 text-gray-600 text-sm">(48)</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-1 truncate">${item.kategori}</p>
+                // Update jumlah produk
+                productCount.textContent = `Menampilkan ${data.length} dari ${data.length} produk`;
+
+                produkContainer.innerHTML = '';
+
+                data.forEach(item => {
+                    const produkDiv = document.createElement('div');
+                    produkDiv.classList.add(
+                        'bg-white', 
+                        'rounded-lg', 
+                        'shadow-md', 
+                        'overflow-hidden', 
+                        'hover:shadow-lg', 
+                        'transition', 
+                        'cursor-pointer', 
+                        'flex', 
+                        'flex-col', 
+                        'w-full', 
+                        'max-w-sm',
+                        'h-[350px]'
+                    );
+                    produkDiv.id = `produk-${item.produk_id}`;
+                    produkDiv.innerHTML = `
+                        <div class="relative w-full h-48 overflow-hidden">
+                            <img src="${item.gambar_produk ? '/storage/produk/' + item.gambar_produk : '/storage/produk/no_image.png'}" alt="${item.nama_produk}" class="w-full h-full object-cover object-center border border-gray-300 rounded-md" loading="lazy" onerror="this.src='/storage/produk/no_image.png'">
+                            <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
                         </div>
+                        <div class="p-3 flex flex-col flex-1">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 truncate">${item.nama_produk}</h3>
+                                <div class="flex text-yellow-400 my-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ml-1 text-gray-600 text-sm">(48)</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-1 truncate">${item.kategori}</p>
+                            </div>
                             <p class="text-emerald-600 font-bold mt-2 items-center">Rp${item.biaya_sewa}/hari</p>
-                    </div>
-                `;
+                        </div>
+                    `;
 
-                produkDiv.addEventListener('click', () => {
-                    window.location.href = `/detail-produk/${item.produk_id}`;
+                    produkDiv.addEventListener('click', () => {
+                        window.location.href = `/detail_produk/${item.produk_id}`;
+                    });
+
+                    produkContainer.appendChild(produkDiv);
                 });
 
-                produkContainer.appendChild(produkDiv); // Tambahkan produk ke dalam kontainer
-            });
-
-            if (data.length === 0) {
-                produkContainer.innerHTML = '<p class="text-gray-600 text-center">Belum ada produk yang tersedia.</p>';
+                if (data.length === 0) {
+                    produkContainer.innerHTML = '<p class="text-gray-600 text-center">Belum ada produk yang tersedia.</p>';
+                }
+            } catch (error) {
+                console.error('Gagal mengambil data produk:', error);
+                document.getElementById('containerProduk').innerHTML = '<p class="text-gray-600 text-center">Gagal memuat produk.</p>';
             }
-        } catch (error) {
-            console.error('Gagal mengambil data produk:', error);
         }
-    }
 
-    // Panggil fungsi ketika halaman sudah dimuat
-    document.addEventListener('DOMContentLoaded', fetchProduk);
-</script>
+        // Panggil fungsi ketika halaman sudah dimuat
+        document.addEventListener('DOMContentLoaded', () => fetchProduk());
+
+        // Sorting produk
+        const sortSelect = document.getElementById('sort-products');
+        sortSelect.addEventListener('change', () => {
+            const sortBy = sortSelect.value;
+            fetchProduk({ sort: sortBy });
+        });
+
+        // Filter produk
+        const filterKategori = document.getElementById('filter-kategori');
+        filterKategori.addEventListener('change', () => {
+        console.log('Kategori diubah'); // Debug
+        const filters = {};
+
+        // Kategori
+        const kategori = filterKategori.value;
+        if (kategori) {
+            filters.kategori = kategori;
+            console.log('Filter kategori diterapkan:', kategori); // Debug
+        }
+
+        // Harga
+        const hargaMin = document.getElementById('filter-harga-min').value;
+        const hargaMax = document.getElementById('filter-harga-max').value;
+        if (hargaMin) filters.harga_min = hargaMin;
+        if (hargaMax) filters.harga_max = hargaMax;
+
+        // Ketersediaan
+        const tersedia = document.getElementById('filter-tersedia').checked;
+        const pengirimanGratis = document.getElementById('filter-pengiriman-gratis').checked;
+        const promo = document.getElementById('filter-promo').checked;
+        if (tersedia) filters.tersedia = 1;
+        if (pengirimanGratis) filters.pengiriman_gratis = 1;
+        if (promo) filters.promo = 1;
+
+        // Rating
+        const rating5 = document.getElementById('filter-rating-5').checked;
+        const rating4 = document.getElementById('filter-rating-4').checked;
+        const rating3 = document.getElementById('filter-rating-3').checked;
+        if (rating5) filters.rating = 5;
+        else if (rating4) filters.rating = 4;
+        else if (rating3) filters.rating = 3;
+
+        fetchProduk(filters);
+    });
+    </script>
 </body>
 </html>

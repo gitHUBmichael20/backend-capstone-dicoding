@@ -8,12 +8,14 @@ class Peminjaman extends Model
 {
     //
     protected $table = 'peminjaman';
+
     protected $primaryKey = 'peminjaman_id';
+
     protected $fillable = [
         'pengguna_id',
         'tanggal_pinjam',
         'tanggal_kembali',
-        'status'
+        'status',
     ];
 
     public function pengguna()

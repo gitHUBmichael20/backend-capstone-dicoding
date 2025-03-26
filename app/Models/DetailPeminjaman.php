@@ -8,11 +8,13 @@ class DetailPeminjaman extends Model
 {
     //
     protected $table = 'detail_peminjaman';
+
     protected $primaryKey = 'detail_id';
+
     protected $fillable = [
         'peminjaman_id',
         'produk_id',
-        'jumlah'
+        'jumlah',
     ];
 
     public function peminjaman()

@@ -8,11 +8,13 @@ class Keranjang extends Model
 {
     //
     protected $table = 'keranjang';
+
     protected $primaryKey = 'keranjang_id';
+
     protected $fillable = [
         'pengguna_id',
         'produk_id',
-        'jumlah'
+        'jumlah',
     ];
 
     public function pengguna()
