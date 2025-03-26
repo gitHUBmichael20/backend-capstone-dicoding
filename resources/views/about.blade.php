@@ -27,7 +27,7 @@
     <div class="container py-4 shadow-box">
         <div class="row align-items-center ">
             <div class="col-md-6" >
-                <img src="pro.jpeg" class="img-fluid rounded-shadow" alt="Deskripsi Project" style="width: 500px; height: auto;">
+                <img src="storage/app/public/images/pro.jpeg" class="img-fluid rounded-shadow" alt="Deskripsi Project" style="width: 500px; height: auto;">
             </div>
             <div class="col-md-5" >
                 <h2>Deskripsi Project</h2>
@@ -62,15 +62,15 @@ rekomendasi cerdas untuk efisiensi yang revolusioner.</p>
         <h2>Keunggulan Project</h2> 
         <div class="row">
             <div class="col-md-4 ">
-                <img src="laugh.png" class="rounded-circle" alt="Keunggulan 1" style="width: 100px; height: 100px;">
+                <img src="storage/app/public/images/laugh.png" class="rounded-circle" alt="Keunggulan 1" style="width: 100px; height: 100px;">
                 <h4 class="mt-3">user-friendly</h4>
             </div>
             <div class="col-md-4 ">
-                <img src="easy.png" class="rounded-circle" alt="Keunggulan 2" style="width: 100px; height: 100px;">
+                <img src="storage/app/public/images/easy.png" class="rounded-circle" alt="Keunggulan 2" style="width: 100px; height: 100px;">
                 <h4 class="mt-3">simple design</h4>
             </div>
             <div class="col-md-4">
-                <img src="pro.jpeg" class="rounded-circle" alt="Keunggulan 3" style="width: 100px; height: 100px;">
+                <img src="storage/app/public/images/pro.jpeg" class="rounded-circle" alt="Keunggulan 3" style="width: 100px; height: 100px;">
                 <h4 class="mt-3">Keunggulan 3</h4>
             </div>
         </div>
@@ -81,7 +81,7 @@ rekomendasi cerdas untuk efisiensi yang revolusioner.</p>
         <div class="row justify-content-center ">
             <div class="col-md-4">
                 <h2>Leader</h2>
-                <img src="mike.jpg" class="rounded-shadow" alt="Leader" style="width: 148px; height: 150px;">
+                <img src="storage/app/public/images/mike.jpg" class="rounded-shadow" alt="Leader" style="width: 148px; height: 150px;">
                 <h3 class="mt-2">Michael</h3>
                 <p>Machine Learning</p>
             </div>
@@ -90,22 +90,22 @@ rekomendasi cerdas untuk efisiensi yang revolusioner.</p>
         <!-- Anggota Tim -->
         <div class="row mt-4 ">
             <div class="col-md-3 ">
-                <img src="ghatfan.jpeg" class="rounded-shadow" alt="Anggota 1" style="width: 120px; height: 140px;">
+                <img src="storage/app/public/images/ghatfan.jpeg" class="rounded-shadow" alt="Anggota 1" style="width: 120px; height: 140px;">
                 <h4 class="mt-2">Ghatfan</h4>
                 <p>FrontEnd</p>
             </div>
             <div class="col-md-3 ">
-                <img src="hirto.jpg" class="rounded-shadow" alt="Anggota 2" style="width: 120px; height: 140px;">
+                <img src="storage/app/public/images/hirto.jpg" class="rounded-shadow" alt="Anggota 2" style="width: 120px; height: 140px;">
                 <h4 class="mt-2">Hirto</h4>
                 <p>BackEnd</p>
             </div>
             <div class="col-md-3 ">
-                <img src="mufid.jpg" class="rounded-shadow" alt="Anggota 3" style="width: 120px; height: 140px;">
+                <img src="storage/app/public/images/mufid.jpg" class="rounded-shadow" alt="Anggota 3" style="width: 120px; height: 140px;">
                 <h4 class="mt-2">Mufid</h4>
                 <p>BackEnd</p>
             </div>
             <div class="col-md-3 ">
-                <img src="handika.jpg" class="rounded-shadow" alt="Anggota 4" style="width: 120px; height: 140px;">
+                <img src="storage/app/public/images/handika.jpg" class="rounded-shadow" alt="Anggota 4" style="width: 120px; height: 140px;">
                 <h4 class="mt-2">Handika</h4>
                 <p>FrontEnd</p>
             </div>
