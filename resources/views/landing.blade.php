@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="api-token" content="{{ session('api_token') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -59,7 +60,7 @@
                         <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
                             <i class="fas fa-search"></i>
                         </a>
-                        <a href="/cart" class="text-gray-600 hover:text-emerald-600 transition relative">
+                        <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                         </a>
@@ -305,7 +306,6 @@
             </div>
         </div>
     </section>
-
     <!-- JavaScript -->
     <script>
         // Toggle Mobile Menu
@@ -519,5 +519,6 @@
         fetchProduk(filters);
     });
     </script>
+    <script src="{{ asset('js/landing.js') }}"></script>
 </body>
 </html>

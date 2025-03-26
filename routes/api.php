@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,10 @@ Route::post('/login', [AuthController::class, 'login']); // Bisa hapus kalau han
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::post('/produk', [ProdukController::class, 'store']);
 Route::get('/produk/{id}', [ProdukController::class, 'show']);
+Route::post('/add_produk', [ProdukController::class, 'addToCart']);
+Route::get('/keranjang/{idUser}', [KeranjangController::class, 'index']);
+Route::delete('/keranjang/item/{idKeranjang}', [KeranjangController::class, 'delete']);
+Route::delete('/keranjang/all_item/{idUser}', [KeranjangController::class, 'deleteAll']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'apiUser']);

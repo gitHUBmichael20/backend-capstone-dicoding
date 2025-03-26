@@ -32,4 +32,10 @@ Route::middleware(['auth:web', 'check.api.token'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::get('/detail_produk/{produk_id}', [ProdukController::class, 'show'])->name('detail_produk');
+// Route::get('/detail_produk/{produk_id}', [ProdukController::class, 'show'])->name('detail_produk');
+Route::get('/detail_produk', function () {
+    return view('detail_produk');
+})->name('detail_produk');
+Route::get('/keranjang', function () {
+    return view('keranjang');
+})->name('keranjang');
