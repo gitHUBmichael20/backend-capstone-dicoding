@@ -7,19 +7,63 @@
     <title></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="{{ asset('js/detail_produk.js') }}"></script>
+    {{-- <script src="{{ asset('js/detail_produk.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/detail_produk.js', 'resources/js/app.js'])
 </head>
 <body class="font-sans text-gray-800 bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold text-emerald-600">SatoeRental</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
+                    <a href="/categories" class="text-gray-600 hover:text-emerald-600 transition">Kategori</a>
+                    <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
+                    <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
+                    <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
+                </nav>
+
+                <!-- Desktop Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </a>
+                    @if(auth()->check())
+                        <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
+                    @else
+                        <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
+                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                    @endif
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-600" id="open-menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
     <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Product Image -->
-            <div class="relative">
-                <div class="relative h-96 overflow-hidden rounded-lg">
+            <div class="relative group">
+                <div class="relative h-112 w-112 overflow-hidden rounded-lg 
+                            shadow-lg left-16 transition-all duration-300 
+                            group-hover:shadow-xl 
+                            hover:scale-[1.02]">
                     <div class="absolute top-3 left-3 bg-blue-500 text-white text-xs font-semibold py-1 px-2.5 rounded-full z-10">New</div>
-                    <div class="absolute top-3 left-20 bg-red-500 text-white text-xs font-semibold py-1 px-2.5 rounded-full z-10">-20%</div>
-                    {{-- <img src="{{ $produk->gambar_produk ? asset($produk->gambar_produk) : '/api/placeholder/600/400' }}" alt="{{ $produk->nama_produk }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"> --}}
+                    {{-- <div class="absolute top-3 left-20 bg-red-500 text-white text-xs font-semibold py-1 px-2.5 rounded-full z-10">-20%</div> --}}
+                    <img id="gambarProduk" 
+                         src="" 
+                         alt="" 
+                         class="w-full h-full object-cover transition-transform duration-300">
                 </div>
             </div>
 
@@ -76,10 +120,10 @@
                         <input type="hidden" id="idPengguna">
                         <input type="hidden" id="idProduk">
                         <input type="hidden" id="durasiSewa">
-                        <button type="button" class="flex items-center" onclick="addToCart()">
-                            <i class="fas fa-shopping-cart mr-2"></i>
-                            Add to Cart
-                        </button>
+                            <button type="button" class="flex items-center" onclick="addToCart()">
+                                <i class="fas fa-shopping-cart mr-2"></i>
+                                Add to Cart
+                            </button>
                     </form>
                     <a href="#" class="flex-1 bg-emerald-100 text-emerald-600 border border-emerald-600 font-medium py-3 px-6 rounded-md flex items-center justify-center hover:bg-emerald-200 transition-colors">
                         <i class="far fa-heart mr-2"></i>

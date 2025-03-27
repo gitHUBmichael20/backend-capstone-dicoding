@@ -18,6 +18,6 @@ Route::delete('/keranjang/item/{idKeranjang}', [KeranjangController::class, 'del
 Route::delete('/keranjang/all_item/{idUser}', [KeranjangController::class, 'deleteAll']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    // Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/admin/logout', [AuthController::class, 'adminLogout']);
 });

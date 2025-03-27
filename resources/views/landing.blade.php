@@ -8,9 +8,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/landing.js') }}"></script> --}}
     <title>Welcome To Pinjam Satoe</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/landing.js'])
 </head>
 <body>
     <section class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
@@ -60,11 +60,11 @@
                             <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                         </a>
                         @if(auth()->check())
-                            <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
-                        @else
-                            <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
-                            <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
-                        @endif
+                        <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
+                    @else
+                        <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
+                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                    @endif
                     </div>
 
                     <!-- Mobile Menu Button -->
@@ -81,134 +81,138 @@
             <div id="user-data" class="mb-6"></div>
 
             <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
-                <!-- Filters Sidebar -->
-                <div class="lg:w-1/4">
-                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                        <h3 class="text-lg font-bold mb-4 text-gray-800">Filter Pencarian</h3>
+            <!-- Filters Sidebar -->
+            <div class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800">Filter Pencarian</h3>
 
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Kategori</label>
-                            <select class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <option value="">Semua Kategori</option>
-                                <option value="1">Peralatan Dapur</option>
-                                <option value="2">Peralatan Kebersihan</option>
-                                <option value="3">Perabotan</option>
-                                <option value="4">Elektronik</option>
-                                <option value="5">Dekorasi</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Harga Per Hari</label>
-                            <div class="flex items-center gap-2">
-                                <input type="number" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <span>-</span>
-                                <input type="number" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Ketersediaan</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Tersedia Sekarang</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Pengiriman Gratis</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Promo</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Rating</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-600">& Up</span>
-                                    </div>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-600">& Up</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <button class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
-                            Terapkan Filter
-                        </button>
+                    <!-- Filter Kategori -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Kategori</label>
+                        <select id="filter-kategori" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="">Semua Kategori</option>
+                            <option value="Peralatan Dapur">Peralatan Dapur</option>
+                            <option value="Peralatan Kebersihan">Peralatan Kebersihan</option>
+                            <option value="Perabotan">Perabotan</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Dekorasi">Dekorasi</option>
+                        </select>
                     </div>
-                </div>
 
-                <!-- Product List -->
-                <div class="lg:w-3/4">
-                    <div class="flex justify-between items-center mb-6">
-                        <p class="text-gray-600">Menampilkan 24 dari 156 produk</p>
-
-                        <div class="flex items-center space-x-2">
-                            <label class="text-gray-700">Urutkan:</label>
-                            <select class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <option>Terpopuler</option>
-                                <option>Harga: Rendah ke Tinggi</option>
-                                <option>Harga: Tinggi ke Rendah</option>
-                                <option>Rating Tertinggi</option>
-                                <option>Terbaru</option>
-                            </select>
+                    <!-- Filter Harga Per Hari -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Harga Per Hari</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="harga-min" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <span>-</span>
+                            <input type="number" id="harga-max" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                         </div>
                     </div>
 
-                    <div id="containerProduk" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-                        <!-- Produk akan diisi via JS dari /api/produk -->
+                    <!-- Ketersediaan (Dikomentari) -->
+                    <!--
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Ketersediaan</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="filter-tersedia" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Tersedia Sekarang</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Pengiriman Gratis</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="filter-promo" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Promo</span>
+                            </label>
+                        </div>
                     </div>
+                    -->
 
-                    <!-- Pagination -->
-                    <div class="mt-8 flex justify-center">
-                        <nav class="flex items-center space-x-1">
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                            <a href="#" class="px-3 py-2 rounded-md bg-emerald-600 text-white">1</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">2</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">3</a>
-                            <span class="px-3 py-2 text-gray-500">...</span>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">8</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </nav>
+                    <!-- Rating (Dikomentari) -->
+                    <!--
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Rating</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ml-1 text-gray-600">& Up</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ml-1 text-gray-600">& Up</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
+                    -->
+
+                    <!-- Tombol Terapkan Filter dihapus karena filter akan otomatis diterapkan -->
                 </div>
             </div>
-        </main>
+
+            <!-- Product List -->
+            <div class="lg:w-3/4">
+                <div class="flex justify-between items-center mb-6">
+                    <p id="product-count" class="text-gray-600">Menampilkan 0 dari 0 produk</p>
+
+                    <div class="flex items-center space-x-2">
+                        <label class="text-gray-700">Urutkan:</label>
+                        <select id="sort-option" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="terpopuler">Terpopuler</option>
+                            <option value="price-low-high">Harga: Rendah ke Tinggi</option>
+                            <option value="price-high-low">Harga: Tinggi ke Rendah</option>
+                            <option value="newest">Terbaru</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="containerProduk" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                    <!-- Produk akan diisi via JS dari /api/produk -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-1">
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-3 py-2 rounded-md bg-emerald-600 text-white">1</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">2</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">3</a>
+                        <span class="px-3 py-2 text-gray-500">...</span>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">8</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+</main>
 
         <!-- Subscribe Section -->
         <section class="bg-emerald-100 py-12">
@@ -309,11 +313,11 @@
                 <a href="/contact" class="text-white hover:text-emerald-400 transition">Kontak</a>
                 <div class="pt-6 border-t border-gray-700 flex flex-col items-center space-y-4 w-1/2">
                     @if(auth()->check())
-                        <button id="mobile-logout" class="bg-emerald-600 text-white hover:text-emerald-400 transition w-full text-center">Logout</button>
-                    @else
-                        <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
-                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
-                    @endif
+                    <button id="mobile-logout" class="bg-emerald-600 text-white hover:text-emerald-400 transition w-full text-center">Logout</button>
+                @else
+                    <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
+                    <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
+                @endif
                 </div>
             </div>
         </div>
