@@ -10,6 +10,7 @@
     {{-- <script src="{{ asset('js/detail_produk.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/detail_produk.js', 'resources/js/app.js'])
+
 </head>
 <body class="font-sans text-gray-800 bg-gray-50">
     <header class="bg-white shadow-md sticky top-0 z-40">

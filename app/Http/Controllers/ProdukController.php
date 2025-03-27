@@ -78,7 +78,8 @@ class ProdukController extends Controller
                 $constraint->upsize();
             })->save($path, 80); // Kualitas 80%
 
-            $validated['gambar_produk'] = 'produk/' . $filename;
+            $validated['gambar_produk'] = 'storage/produk/' . $filename;
+
         }
 
         $produk = Produk::create($validated);
