@@ -10,24 +10,50 @@ use Intervention\Image\ImageManagerStatic as Image;
 class ProdukController extends Controller
 {
     // Mengambil semua produk (untuk API)
-    public function index()
+    public function index(Request $request)
     {
-        $produk = Produk::all();
-        return response()->json($produk);
-    }
+        $query = Produk::query();
 
-    // Menampilkan detail produk di view
-    public function detailProduk($id)
-    {
-        $produk = Produk::findOrFail($id);
-        $relatedProducts = Produk::where('kategori', $produk->kategori)
-            ->where('produk_id', '!=', $id)
-            ->take(4)
-            ->get(); // Ambil 4 produk terkait dari kategori yang sama
-        return view('detail_produk', [
-            'produk' => $produk,
-            'relatedProducts' => $relatedProducts
-        ]);
+        // Filter berdasarkan kategori
+        if ($request->has('kategori') && $request->kategori !== '') {
+            $query->where('kategori', $request->kategori);
+        }
+
+        // Filter berdasarkan harga
+        if ($request->has('harga_min') && $request->harga_min !== '') {
+            $query->where('biaya_sewa', '>=', $request->harga_min);
+        }
+        if ($request->has('harga_max') && $request->harga_max !== '') {
+            $query->where('biaya_sewa', '<=', $request->harga_max);
+        }
+
+        // Sorting
+        if ($request->has('sort') && $request->sort !== '') {
+            switch ($request->sort) {
+                case 'price-low-high':
+                    $query->orderBy('biaya_sewa', 'asc');
+                    break;
+                case 'price-high-low':
+                    $query->orderBy('biaya_sewa', 'desc');
+                    break;
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'terpopuler':
+                default:
+                    $query->orderBy('created_at', 'desc'); // Default sorting
+            }
+        }
+
+        $produk = $query->get();
+
+        // Tambahkan gambar_url ke setiap produk
+        $produk->map(function ($item) {
+            $item->gambar_url = $item->gambar_produk ? asset($item->gambar_produk) : asset('storage/produk/no_image.png');
+            return $item;
+        });
+
+        return response()->json($produk);
     }
 
     public function store(Request $request)
@@ -53,6 +79,7 @@ class ProdukController extends Controller
             })->save($path, 80); // Kualitas 80%
 
             $validated['gambar_produk'] = 'storage/produk/' . $filename;
+
         }
 
         $produk = Produk::create($validated);
@@ -64,7 +91,18 @@ class ProdukController extends Controller
     public function show($id)
     {
         $produk = Produk::findOrFail($id);
-        return response()->json($produk);
+        
+        $produk->gambar_url = asset('storage/produk/' . $produk->gambar_produk);
+        
+        return response()->json([
+            'produk_id' => $produk->produk_id,
+            'nama_produk' => $produk->nama_produk,
+            'kategori' => $produk->kategori,
+            'deskripsi' => $produk->deskripsi,
+            'stok' => $produk->stok,
+            'biaya_sewa' => $produk->biaya_sewa,
+            'gambar_url' => $produk->gambar_url,
+        ]);
     }
 
     public function addToCart(Request $request){
