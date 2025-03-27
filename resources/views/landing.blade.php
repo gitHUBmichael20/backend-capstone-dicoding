@@ -43,7 +43,7 @@
 
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex space-x-8">
-                        <a href="/beranda" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
+                        <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                         <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                         <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
                     </nav>
