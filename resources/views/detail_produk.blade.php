@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail Page - {{ $produk->nama_produk }}</title>
+    <meta name="api-token" content="{{ session('api_token') }}">
+    <title></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="{{ asset('js/detail_produk.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans text-gray-800 bg-gray-50">
@@ -16,13 +19,13 @@
                 <div class="relative h-96 overflow-hidden rounded-lg">
                     <div class="absolute top-3 left-3 bg-blue-500 text-white text-xs font-semibold py-1 px-2.5 rounded-full z-10">New</div>
                     <div class="absolute top-3 left-20 bg-red-500 text-white text-xs font-semibold py-1 px-2.5 rounded-full z-10">-20%</div>
-                    <img src="{{ $produk->gambar_produk ? asset($produk->gambar_produk) : '/api/placeholder/600/400' }}" alt="{{ $produk->nama_produk }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                    {{-- <img src="{{ $produk->gambar_produk ? asset($produk->gambar_produk) : '/api/placeholder/600/400' }}" alt="{{ $produk->nama_produk }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"> --}}
                 </div>
             </div>
 
             <!-- Product Info -->
             <div>
-                <h1 class="text-3xl font-bold text-gray-800 leading-tight mb-2">{{ $produk->nama_produk }}</h1>
+                <h1 class="text-3xl font-bold text-gray-800 leading-tight mb-2" id="namaProduk"></h1>
 
                 <div class="flex items-center mb-4">
                     <div class="text-yellow-400 flex">
@@ -36,19 +39,19 @@
                 </div>
 
                 <div class="mb-6">
-                    <span class="text-3xl font-bold text-emerald-600">Rp{{ number_format($produk->biaya_sewa, 0, ',', '.') }}/hari</span>
+                    <span class="text-3xl font-bold text-emerald-600" id="biayaSewa"></span>
                 </div>
 
                 <div class="text-gray-600 mb-6">
-                    <p>{{ $produk->deskripsi }}</p>
+                    <p id="deskripsiProduk"></p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     <div class="flex items-center">
-                        <div class="text-gray-600">Kategori: {{ $produk->kategori }}</div>
+                        <div class="text-gray-600" id="kategori"></div>
                     </div>
                     <div class="flex items-center">
-                        <div class="text-gray-600">Stok: {{ $produk->stok }}</div>
+                        <div class="text-gray-600" id="stokProduk"></div>
                     </div>
                 </div>
 
@@ -56,23 +59,28 @@
                     <div class="flex items-center mb-4">
                         <div class="text-gray-700 mr-3">Rental Days:</div>
                         <div class="flex items-center border border-gray-300 rounded-md overflow-hidden">
-                            <button class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 transition-colors" onclick="updateRentalDays(-1)">
+                            <button class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 transition-colors" onclick="kurangiWaktuPeminjaman()">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <input type="text" id="rental-days" value="3" class="w-16 text-center border-0 py-1.5 focus:outline-none" readonly>
-                            <button class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 transition-colors" onclick="updateRentalDays(1)">
+                            <input type="text" id="rentalDays" value="1" class="w-16 text-center border-0 py-1.5 focus:outline-none" readonly>
+                            <button class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 transition-colors" onclick="tambahWaktuPeminjaman()">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="font-medium text-gray-700">Total rental cost: <span id="total-cost" class="font-semibold text-emerald-600">Rp{{ number_format($produk->biaya_sewa * 3, 0, ',', '.') }}</span></div>
+                    <div class="font-medium text-gray-700">Total rental cost: <span id="cost" class="font-semibold text-emerald-600"></span></div>
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-4">
-                    <a href="#" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-colors">
-                        <i class="fas fa-shopping-cart mr-2"></i>
-                        Add to Cart
-                    </a>
+                    <form  class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-black font-medium py-3 px-6 rounded-md flex items-center justify-center transition-colors">
+                        <input type="hidden" id="idPengguna">
+                        <input type="hidden" id="idProduk">
+                        <input type="hidden" id="durasiSewa">
+                        <button type="button" class="flex items-center" onclick="addToCart()">
+                            <i class="fas fa-shopping-cart mr-2"></i>
+                            Add to Cart
+                        </button>
+                    </form>
                     <a href="#" class="flex-1 bg-emerald-100 text-emerald-600 border border-emerald-600 font-medium py-3 px-6 rounded-md flex items-center justify-center hover:bg-emerald-200 transition-colors">
                         <i class="far fa-heart mr-2"></i>
                         Wishlist
@@ -91,12 +99,12 @@
             </div>
 
             <div class="py-6">
-                <p class="text-gray-600 leading-relaxed">{{ $produk->deskripsi }}</p>
+                <p class="text-gray-600 leading-relaxed"></p>
             </div>
         </div>
 
         <!-- Related Products -->
-        <div class="mt-12">
+        {{-- <div class="mt-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-6">You Might Also Like</h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -130,10 +138,10 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    <script>
+    {{-- <script>
         // Fungsi untuk menghitung total biaya sewa
         const biayaSewa = {{ $produk->biaya_sewa }};
         let rentalDays = 3;
@@ -144,6 +152,6 @@
             const totalCost = biayaSewa * rentalDays;
             document.getElementById('total-cost').textContent = 'Rp' + totalCost.toLocaleString('id-ID');
         }
-    </script>
+    </script> --}}
 </body>
 </html>

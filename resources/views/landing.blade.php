@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="api-token" content="{{ session('api_token') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -42,11 +43,9 @@
 
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex space-x-8">
-                        <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
-                        <a href="/categories" class="text-gray-600 hover:text-emerald-600 transition">Kategori</a>
+                        <a href="/beranda" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                         <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                         <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
-                        <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
                     </nav>
 
                     <!-- Desktop Actions -->
@@ -54,7 +53,7 @@
                         <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
                             <i class="fas fa-search"></i>
                         </a>
-                        <a href="/cart" class="text-gray-600 hover:text-emerald-600 transition relative">
+                        <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                         </a>
@@ -318,145 +317,7 @@
         </div>
     </section>
 
-    <script>
-        // Toggle Mobile Menu
-        const openMenu = document.getElementById('open-menu');
-        const closeMenu = document.getElementById('close-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
+    <script src="{{ asset('js/landing.js') }}"></script>
 
-        openMenu.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-        });
-
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
-
-        // Autentikasi dan API
-        const token = "{{ session('api_token') }}";
-        console.log('Token in landing:', token);
-
-        // Ambil data user
-        if (token) {
-            axios.get('/api/user', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            })
-            .then(response => {
-                document.getElementById('user-data').innerHTML = `Email: ${response.data.email} | Nomor Telepon: ${response.data.nomor_telepon}`;
-            })
-            .catch(error => console.error('Error fetching user:', error));
-        }
-
-        // Logout (Desktop)
-        const logoutButton = document.getElementById('logout');
-        if (logoutButton) {
-            logoutButton.addEventListener('click', function() {
-                axios.post('/api/logout', {}, {
-                    headers: { 'Authorization': 'Bearer ' + token }
-                })
-                .then(response => {
-                    window.location.href = '/login';
-                })
-                .catch(error => console.error('Error logging out:', error));
-            });
-        }
-
-        // Logout (Mobile)
-        const mobileLogoutButton = document.getElementById('mobile-logout');
-        if (mobileLogoutButton) {
-            mobileLogoutButton.addEventListener('click', function() {
-                axios.post('/api/logout', {}, {
-                    headers: { 'Authorization': 'Bearer ' + token }
-                })
-                .then(response => {
-                    window.location.href = '/login';
-                })
-                .catch(error => console.error('Error logging out:', error));
-            });
-        }
-
-        // Ambil produk
-        if (token) {
-            axios.get('/api/produk', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            })
-            .then(response => {
-                const container = document.getElementById('containerProduk');
-                // Misalnya response.data adalah array produk
-                // Tambah logika untuk render produk di sini
-            })
-            .catch(error => console.error('Error fetching products:', error));
-        }
-    </script>
-<script>
-    async function fetchProduk() {
-        try {
-            const token = "{{ session('api_token') }}";
-            const response = await axios.get('/api/produk', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            });
-            const data = response.data; // Parsing response sebagai JSON
-            console.log(data); // Debug: cek data dari API
-            const produkContainer = document.getElementById('containerProduk');
-
-            produkContainer.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan produk baru
-
-            data.forEach(item => {
-                const produkDiv = document.createElement('div');
-                produkDiv.classList.add(
-                    'bg-white', 
-                    'rounded-lg', 
-                    'shadow-md', 
-                    'overflow-hidden', 
-                    'hover:shadow-lg', 
-                    'transition', 
-                    'cursor-pointer', 
-                    'flex', 
-                    'flex-col', 
-                    'w-full', 
-                    'max-w-sm', // Lebar card (384px)
-                    'h-[350px]' // Tinggi tetap untuk card
-                );
-                produkDiv.id = `produk-${item.produk_id}`;
-                produkDiv.innerHTML = `
-                    <div class="relative w-full h-48 overflow-hidden">
-                        <img src="${item.gambar_produk ? '/storage/produk/' + item.gambar_produk : '/storage/produk/no_image.png'}" alt="${item.nama_produk}" class="w-full h-full object-cover object-center border border-gray-300 rounded-md" loading="lazy" onerror="this.src='/storage/produk/no_image.png'">
-                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
-                    </div>
-                    <div class="p-3 flex flex-col flex-1">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800 truncate">${item.nama_produk}</h3>
-                            <div class="flex text-yellow-400 my-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="ml-1 text-gray-600 text-sm">(48)</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-1 truncate">${item.kategori}</p>
-                        </div>
-                            <p class="text-emerald-600 font-bold mt-2 items-center">Rp${item.biaya_sewa}/hari</p>
-                    </div>
-                `;
-
-                produkDiv.addEventListener('click', () => {
-                    window.location.href = `/detail-produk/${item.produk_id}`;
-                });
-
-                produkContainer.appendChild(produkDiv); // Tambahkan produk ke dalam kontainer
-            });
-
-            if (data.length === 0) {
-                produkContainer.innerHTML = '<p class="text-gray-600 text-center">Belum ada produk yang tersedia.</p>';
-            }
-        } catch (error) {
-            console.error('Gagal mengambil data produk:', error);
-        }
-    }
-
-    // Panggil fungsi ketika halaman sudah dimuat
-    document.addEventListener('DOMContentLoaded', fetchProduk);
-</script>
 </body>
 </html>
