@@ -1,34 +1,80 @@
 import Swal from 'sweetalert2'; 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const data = JSON.parse(sessionStorage.getItem("detailProduk"));
-    const imgElement = document.getElementById('gambarProduk');
+    const produkId = window.location.pathname.split('/').pop(); // Ambil ID dari /detail_produk/{id}
 
-    if (data) {
-        document.querySelector("title").textContent = `Detail Produk ${data.nama_produk}`;
-        document.getElementById("namaProduk").textContent = data.nama_produk;
-        document.getElementById("biayaSewa").textContent = `Rp${data.biaya_sewa.toLocaleString('id-ID')}/hari`;
-        document.getElementById("deskripsiProduk").textContent = data.deskripsi;
-        document.getElementById("kategori").textContent = `Kategori : ${data.kategori}`;
-        document.getElementById("stokProduk").textContent = `Stok : ${data.stok}`;
-        document.getElementById("cost").textContent = `Rp ${data.biaya_sewa.toLocaleString('id-ID')}`;
-        document.getElementById("idProduk").value = data.produk_id;
-        document.getElementById("durasiSewa").value = 1;
-        
-        if (data && data.gambar_url) {
-            imgElement.src = data.gambar_url;
-            imgElement.alt = data.nama_produk;
-            
-            imgElement.onerror = function() {
-                this.src = '/storage/produk/no_image.png';
-                this.classList.replace('object-scale-down', 'object-cover');
-            };
-        }
+    if (!produkId || isNaN(produkId)) {
+        console.error('ID produk tidak ditemukan di URL');
+        document.querySelector('.container').innerHTML = `
+            <div class="text-center text-gray-600">
+                <p>ID produk tidak valid. Silakan kembali ke <a href="/" class="text-emerald-600 hover:underline">halaman utama</a>.</p>
+            </div>
+        `;
+        return;
+    }
+
+    let data = JSON.parse(sessionStorage.getItem("detailProduk"));
+
+    if (!data || data.produk_id != produkId) {
+        fetch(`/api/produk/${produkId}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.produk_id) {
+                    sessionStorage.setItem('detailProduk', JSON.stringify(result));
+                    displayProduk(result);
+                } else {
+                    console.error('Produk tidak ditemukan:', result.message);
+                    document.querySelector('.container').innerHTML = `
+                        <div class="text-center text-gray-600">
+                            <p>Produk tidak ditemukan. Silakan kembali ke <a href="/" class="text-emerald-600 hover:underline">halaman utama</a>.</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Gagal mengambil data produk:', error);
+                document.querySelector('.container').innerHTML = `
+                    <div class="text-center text-gray-600">
+                        <p>Gagal mengambil data produk. Silakan kembali ke <a href="/" class="text-emerald-600 hover:underline">halaman utama</a>.</p>
+                    </div>
+                `;
+            });
+    } else {
+        displayProduk(data);
     }
 
     getUserId();
 });
 
+function displayProduk(data) {
+    const imgElement = document.getElementById('gambarProduk');
+
+    document.querySelector("title").textContent = `Detail Produk ${data.nama_produk}`;
+    document.getElementById("namaProduk").textContent = data.nama_produk;
+    document.getElementById("biayaSewa").textContent = `Rp${data.biaya_sewa.toLocaleString('id-ID')}/hari`;
+    document.getElementById("deskripsiProduk").textContent = data.deskripsi;
+    document.getElementById("kategori").textContent = `Kategori : ${data.kategori}`;
+    document.getElementById("stokProduk").textContent = `Stok : ${data.stok}`;
+    document.getElementById("cost").textContent = `Rp${data.biaya_sewa.toLocaleString('id-ID')}`;
+    document.getElementById("idProduk").value = data.produk_id;
+    document.getElementById("durasiSewa").value = 1;
+
+    // Update gambar produk
+    if (data && data.gambar_url) {
+        imgElement.src = data.gambar_url;
+        imgElement.alt = data.nama_produk;
+        
+        imgElement.onerror = function() {
+            console.log('Gambar gagal dimuat, menggunakan fallback');
+            this.src = '/storage/produk/no_image.png';
+            this.classList.replace('object-scale-down', 'object-cover');
+            this.onerror = null; 
+        };
+    } else {
+        imgElement.src = '/storage/produk/no_image.png';
+        imgElement.alt = 'Produk';
+    }
+}
 
 function tambahWaktuPeminjaman() {
     const rentalDays = document.getElementById("rentalDays");
@@ -50,7 +96,6 @@ function updateDurasiPeminjaman() {
     const rentalDays = document.getElementById("rentalDays").value;
     document.getElementById("durasiSewa").value = rentalDays;
 }
-window.updateDurasiPeminjaman = updateDurasiPeminjaman;
 
 async function getUserId() {
     try {
@@ -118,9 +163,10 @@ function updateCost() {
             .getElementById("biayaSewa")
             .textContent.replace("Rp", "")
             .replace(/\./g, "")
+            .replace("/hari", "")
     );
     const totalBiaya = durasiSewa * biayaSewa;
-    document.getElementById("cost").textContent = `Rp${totalBiaya}`;
+    document.getElementById("cost").textContent = `Rp${totalBiaya.toLocaleString('id-ID')}`;
 }
 
 window.tambahWaktuPeminjaman = tambahWaktuPeminjaman;

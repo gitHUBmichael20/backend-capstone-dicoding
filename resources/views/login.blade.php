@@ -6,22 +6,10 @@
   <title>SatoePinjam - Masuk</title>
   <link rel="stylesheet" href="{{ asset('css/login-singup.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/login.js'])
 </head>
 <body>
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: "{{ session('success') }}",
-                    showConfirmButton: false,
-                    timer: 2500
-                });
-            });
-        </script>
-    @endif
-
     @if (session('failed'))
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -29,7 +17,7 @@
                     icon: 'error',
                     title: "{{ session('failed') }}",
                     showConfirmButton: false,
-                    timer: 2500
+                    timer: 1500
                 });
             });
         </script>
@@ -53,7 +41,7 @@
           <div class="input-group">
             <div class="input-container">
               <i class="fa-solid fa-user input-icon"></i>
-              <input type="text" placeholder="Email atau No HP" class="input-field" name="email">
+              <input type="email" placeholder="Masukkan email anda" class="input-field" name="email">
             </div>
           </div>
 

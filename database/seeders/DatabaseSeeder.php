@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             'nama_pengguna' => 'q',
             'email' => 'q@gmail.com',
             'nomor_telepon' => '62878xxxxxxxx',
+            'password' => 'qqqqqqqq',
+        ]);
+        $this->call([
+            AdminSeeder::class,
+            ProdukSeeder::class,
         ]);
     }
 }

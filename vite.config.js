@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/detail_produk.js',
                 'resources/js/landing.js',
                 'resources/js/keranjang.js',
+                'resources/js/login.js',
             ],
             refresh: true,
         }),
