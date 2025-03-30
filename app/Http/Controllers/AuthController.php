@@ -36,7 +36,26 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
     
-        if (!Auth::attempt($credentials)) {
+        $role = null;
+        $guard = null;
+        $user = null;
+    
+        // Coba autentikasi sebagai pengguna biasa (guard 'web')
+        if (Auth::guard('web')->attempt($credentials)) {
+            $guard = 'web';
+            $role = 'pengguna';
+            $user = Auth::guard('web')->user();
+        }
+    
+        // Jika gagal, coba autentikasi sebagai admin (guard 'admin')
+        if (!$user && Auth::guard('admin')->attempt($credentials)) {
+            $guard = 'admin';
+            $role = 'admin';
+            $user = Auth::guard('admin')->user();
+        }
+    
+        // Jika keduanya gagal, kembalikan pesan error (sesuai kode asli)
+        if (!$user) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Email atau Password salah'], 401);
             }
@@ -44,18 +63,25 @@ class AuthController extends Controller
             return redirect()->route('login')->with('failed', $failedMessage);
         }
     
-        $pengguna = Auth::user();
-        $token = $pengguna->createToken('auth_token')->plainTextToken;
+        // Buat token API dan simpan di session (sesuai kode asli)
+        $token = $user->createToken('auth_token')->plainTextToken;
         session(['api_token' => $token]);
+        session(['role' => $role]); // Tambahan: simpan role untuk redirect
     
         if ($request->expectsJson()) {
             return response()->json([
                 'token' => $token,
-                'message' => 'Login successful'
+                'message' => 'Login successful',
+                'role' => $role, // Tambahan: beri tahu role di response JSON
             ], 200);
         }
     
-        return redirect()->route('landing');
+        // Redirect berdasarkan role
+        if ($role === 'admin') {
+            return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai Admin!');
+        }
+    
+        return redirect()->route('landing')->with('success', 'Login berhasil!');
     }
 
     public function logout(Request $request)

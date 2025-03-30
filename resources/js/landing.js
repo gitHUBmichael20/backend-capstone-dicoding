@@ -1,3 +1,7 @@
+import Swal from 'sweetalert2';
+
+window.Swal = Swal;
+
 async function fetchProduk() {
     try {
         // Ambil nilai filter dari elemen
@@ -90,17 +94,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sort-option').addEventListener('change', fetchProduk);
 });
 
-// Panggil fungsi ketika halaman sudah dimuat
 async function fetchDetailProduk(produkId) {
     try {
-        const response = await fetch (`api/produk/${produkId}`);
+        const response = await fetch(`/api/produk/${produkId}`);
         const data = await response.json();
-        sessionStorage.setItem('detailProduk', JSON.stringify(data));
-        window.location.href = '/detail_produk';
-    } catch (error) {
 
+        if (response.ok) {
+            sessionStorage.setItem('detailProduk', JSON.stringify(data));
+            window.location.href = `/detail_produk/${produkId}`;
+        } else {
+            console.error('Gagal mengambil detail produk:', data.message);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
     }
 }
+
+window.fetchDetailProduk = fetchDetailProduk;
 
 // Toggle Mobile Menu
 const openMenu = document.getElementById('open-menu');
