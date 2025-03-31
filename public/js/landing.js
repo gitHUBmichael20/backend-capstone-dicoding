@@ -131,8 +131,44 @@ if (token) {
     .catch(error => console.error('Error fetching products:', error));
 }
 
+async function getUserId() {
+    try {
+        const response = await fetch('/api/user', {
+            method: 'GET',
+            headers: {
+                'Accept' : 'application/json',
+                'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`
+            }
+        });
 
+        const user = await response.json();
+        return user.pengguna_id;
+    } catch (error) {
+        console.error('Gagal mengambil data user:', error);
+    }
+}
 
+async function fetchCartInfo() {
+    try {
+        const idUser = await getUserId();
+        const response = await fetch(`/api/keranjang/${idUser}`);
+        const data = await response.json();
+        console.log(data);
+        if (data.length > 0) {
+            document.getElementById('infoDataCart').textContent = data.length;
+            document.getElementById('infoDataCart').classList.remove('hidden');
+        } else {
+            document.getElementById('infoDataCart').classList.add('hidden');
+        }
+    } catch (error) {
+        console.error('Error fetching cart info:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProduk();
+    fetchCartInfo();
+});
 // async function fetchProduk() {
     //     try {
     //         const token = "{{ session('api_token') }}";
@@ -201,8 +237,3 @@ if (token) {
 
     // // Panggil fungsi ketika halaman sudah dimuat
     // document.addEventListener('DOMContentLoaded', fetchProduk);
-
-document.addEventListener('DOMContentLoaded', fetchProduk);
-
-
-

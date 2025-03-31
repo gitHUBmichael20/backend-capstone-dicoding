@@ -1,5 +1,5 @@
 addEventListener('DOMContentLoaded', () => {
-    sendIdUser();
+    renderKeranjang();
 });
 
 async function getUserId() {
@@ -25,10 +25,37 @@ async function sendIdUser() {
     const response = await fetch (`/api/keranjang/${idPengguna}`);
     const data = await response.json();
 
-    data.forEach(item => {
+    // data.forEach(item => {
+    //     const tr = document.createElement('tr');
+    //     tr.innerHTML = `
+    //     <td>${item.keranjang_id}</td>
+    //     <td>${item.nama_produk}</td>
+    //     <td>${item.biaya_sewa}</td>
+    //     <td>${item.jumlah} days</td>
+    //     <td>${item.biaya_sewa * item.jumlah}</td>
+    //     <td>
+    //     <button type="button" onclick="deleteKeranjang(${item.keranjang_id})" class="btn btn-sm btn-danger">Hapus</button>
+    //     </td>
+    //     `;
+    //     keranjangBody.appendChild(tr);
+    // });
+
+    // const totalSeluruhHarga = data
+    //     .map(item => item.biaya_sewa * item.jumlah)
+    //     .reduce((total, nilai) => total + nilai, 0);
+
+    // document.getElementById('totalHarga').textContent = `Rp ${totalSeluruhHarga || 0}`;
+    return data;
+
+}
+
+async function renderKeranjang() {
+    const data = await sendIdUser();
+    console.log(data);
+    data.forEach((item, index) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-        <td>${item.keranjang_id}</td>
+        <td>${index+1}</td>
         <td>${item.nama_produk}</td>
         <td>${item.biaya_sewa}</td>
         <td>${item.jumlah} days</td>
@@ -45,8 +72,6 @@ async function sendIdUser() {
         .reduce((total, nilai) => total + nilai, 0);
 
     document.getElementById('totalHarga').textContent = `Rp ${totalSeluruhHarga || 0}`;
-
-
 }
 
 async function deleteKeranjang($idKeranjang) {
@@ -108,6 +133,12 @@ async function deleteAll() {
         });
     }
     console.log(data);
+}
+
+async function insertDataToLocalStorage() {
+    const data = await sendIdUser();
+    localStorage.setItem('keranjang', JSON.stringify(data));
+    window.location.href = '/confirm?page=keranjang';
 }
 
 // function renderKeranjang(data) {

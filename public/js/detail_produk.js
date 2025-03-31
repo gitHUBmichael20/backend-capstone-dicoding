@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const data = JSON.parse(sessionStorage.getItem('detailProduk'));
+    console.log(typeof data);
 
     if (data) {
         document.querySelector('title').textContent = `Detail Produk ${data.nama_produk}`;
@@ -22,6 +23,7 @@ function tambahWaktuPeminjaman() {
     rentalDays.value++;
     updateDurasiPeminjamman();
     updateCost();
+    returnDate();
 }
 
 function kurangiWaktuPeminjaman() {
@@ -30,6 +32,7 @@ function kurangiWaktuPeminjaman() {
         rentalDays.value--;
         updateDurasiPeminjamman();
         updateCost();
+        returnDate();
     }
 }
 
@@ -50,7 +53,7 @@ async function getUserId() {
 
         const user = await response.json();
         console.log('ID User:', user.pengguna_id);
-        document.getElementById('idPengguna').value = user.pengguna_id;
+        return user.pengguna_id;
     } catch (error) {
         console.error('Gagal mengambil data user:', error);
     }
@@ -99,4 +102,46 @@ function updateCost() {
     const biayaSewa = parseInt(document.getElementById('biayaSewa').textContent.replace('Rp', '').replace(/\./g, ''));
     const totalBiaya = durasiSewa * biayaSewa;
     document.getElementById('cost').textContent = `Rp${totalBiaya}`;
+}
+
+function currentDate() {
+    let today = new Date();
+    return today;
+}
+
+function returnDate() {
+    let today = currentDate();
+    const duration = parseInt(document.getElementById('rentalDays').value);
+
+    if (isNaN(duration) || duration <= 0) {
+        console.error("Durasi peminjaman tidak valid.");
+        return;
+    }
+
+    let returnDate = new Date(today);
+    returnDate.setDate(today.getDate() + duration);
+
+    let formattedToday = today.toISOString().split('T')[0];
+    let formattedReturnDate = returnDate.toISOString().split('T')[0];
+
+    document.getElementById('tanggalSewa').value = formattedToday;
+    document.getElementById('tanggalPengembalian').value = formattedReturnDate;
+}
+
+async function sendRentalData() {
+    const data = JSON.parse(sessionStorage.getItem('detailProduk'));
+    const rentalData = {
+        'id_pengguna' : await getUserId(),
+        'id_produk' : data.produk_id,
+        'nama_produk' : data.nama_produk,
+        'harga' : data.biaya_sewa,
+        'durasi' : parseInt(document.getElementById('durasiSewa').value),
+        'tanggal_peminjaman' : document.getElementById('tanggalSewa').value,
+        'tanggal_pengembalian' : document.getElementById('tanggalPengembalian').value,
+        'biaya_sewa' : parseInt(document.getElementById('cost').textContent.replace('Rp', '').replace(/\./g, ''))
+    };
+
+    localStorage.setItem('rentalData', JSON.stringify(rentalData));
+
+    window.location.href = '/confirm?page=detail';
 }

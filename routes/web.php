@@ -21,3 +21,6 @@ Route::get('/detail_produk', function () {
 Route::get('/keranjang', function () {
     return view('keranjang');
 })->name('keranjang');
+Route::get('/confirm', function () {
+    return view('confirm');
+})->name('confirm');

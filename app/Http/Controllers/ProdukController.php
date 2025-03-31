@@ -67,14 +67,15 @@ class ProdukController extends Controller
         return response()->json($produk);
     }
 
-    public function addToCart(Request $request){
-    $validated = $request->validate([
-        'id_pengguna' => 'required|integer|exists:pengguna,pengguna_id',
-        'id_produk' => 'required|integer|exists:produk,produk_id',
-        'durasi_sewa' => 'required|integer|min:1',
-    ]);
+    public function addToCart(Request $request)
+    {
+        $validated = $request->validate([
+            'id_pengguna' => 'required|integer|exists:pengguna,pengguna_id',
+            'id_produk' => 'required|integer|exists:produk,produk_id',
+            'durasi_sewa' => 'required|integer|min:1',
+        ]);
 
-    try {
+        try {
         Keranjang::create([
             'pengguna_id' => $validated['id_pengguna'],
             'produk_id' => $validated['id_produk'],
@@ -86,12 +87,22 @@ class ProdukController extends Controller
             'message' => 'Produk berhasil ditambahkan ke keranjang',
         ], 200);
 
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Gagal menambahkan produk ke keranjang. ' . $e->getMessage()
-        ], 500);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menambahkan produk ke keranjang. ' . $e->getMessage()
+            ], 500);
+        }
     }
-}
+    public function decreaseStocks($produkId) {
+        $produk = Produk::find($produkId);
+        if ($produk) {
+            $produk->stok--;
+            if ($produk->stok < 0) {
+                return response()->json(['error' => 'Stok tidak mencukupi']);
+            }
+            $produk->save();
+        }
+    }
 
 }

@@ -81,10 +81,15 @@
                             Add to Cart
                         </button>
                     </form>
-                    <a href="#" class="flex-1 bg-emerald-100 text-emerald-600 border border-emerald-600 font-medium py-3 px-6 rounded-md flex items-center justify-center hover:bg-emerald-200 transition-colors">
-                        <i class="far fa-heart mr-2"></i>
-                        Wishlist
-                    </a>
+                    <form class="flex-1 bg-emerald-100 text-emerald-600 border border-emerald-600 font-medium py-3 px-6 rounded-md flex items-center justify-center hover:bg-emerald-200 transition-colors">
+                        {{-- <i class="far fa-heart mr-2"></i> --}}
+                        <input type="hidden" id="tanggalSewa">
+                        <input type="hidden" id="tanggalPengembalian">
+                        <button type="button" class="flex items-center" onclick="sendRentalData()">
+                            <i class="fas fa-handshake mr-2"></i>
+                            Rent
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
