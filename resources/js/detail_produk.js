@@ -48,6 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function displayProduk(data) {
     const imgElement = document.getElementById('gambarProduk');
+    const addToCartButton = document.querySelector('button[onclick="addToCart()"]');
+    const rentButton = document.querySelector('button[onclick="sendRentalData()"]');
 
     document.querySelector("title").textContent = `Detail Produk ${data.nama_produk}`;
     document.getElementById("namaProduk").textContent = data.nama_produk;
@@ -59,7 +61,15 @@ function displayProduk(data) {
     document.getElementById("idProduk").value = data.produk_id;
     document.getElementById("durasiSewa").value = 1;
 
-    // Update gambar produk
+    const stok = parseInt(data.stok);
+    if (stok <= 0) {
+        addToCartButton.disabled = true;
+        rentButton.disabled = true;
+        addToCartButton.classList.add('opacity-50', 'cursor-not-allowed');
+        rentButton.classList.add('opacity-50', 'cursor-not-allowed');
+        document.getElementById("stokProduk").classList.add('text-red-600');
+    }
+
     if (data && data.gambar_url) {
         imgElement.src = data.gambar_url;
         imgElement.alt = data.nama_produk;
@@ -81,6 +91,7 @@ function tambahWaktuPeminjaman() {
     rentalDays.value++;
     updateDurasiPeminjaman();
     updateCost();
+    returnDate();
 }
 
 function kurangiWaktuPeminjaman() {
@@ -89,6 +100,7 @@ function kurangiWaktuPeminjaman() {
         rentalDays.value--;
         updateDurasiPeminjaman();
         updateCost();
+        returnDate();
     }
 }
 
@@ -118,6 +130,16 @@ async function getUserId() {
 }
 
 async function addToCart() {
+    const stok = parseInt(document.getElementById("stokProduk").textContent.replace('Stok : ', ''));
+    if (stok <= 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Stok Habis",
+            text: "Maaf, stok produk ini sudah habis. Silakan pilih produk lain.",
+            showConfirmButton: true,
+        });
+        return;
+    }
     try {
         const response = await fetch("/api/add_produk", {
             method: "POST",
@@ -169,8 +191,64 @@ function updateCost() {
     document.getElementById("cost").textContent = `Rp${totalBiaya.toLocaleString('id-ID')}`;
 }
 
+function currentDate() {
+    let today = new Date();
+    return today;
+}
+
+function returnDate() {
+    let today = currentDate();
+    const duration = parseInt(document.getElementById('rentalDays').value);
+
+    if (isNaN(duration) || duration <= 0) {
+        console.error("Durasi peminjaman tidak valid.");
+        return;
+    }
+
+    let returnDate = new Date(today);
+    returnDate.setDate(today.getDate() + duration);
+
+    let formattedToday = today.toISOString().split('T')[0];
+    let formattedReturnDate = returnDate.toISOString().split('T')[0];
+
+    document.getElementById('tanggalSewa').value = formattedToday;
+    document.getElementById('tanggalPengembalian').value = formattedReturnDate;
+}
+
+async function sendRentalData() {
+    const stok = parseInt(document.getElementById("stokProduk").textContent.replace('Stok : ', ''));
+    if (stok <= 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Stok Habis",
+            text: "Maaf, stok produk ini sudah habis. Silakan pilih produk lain.",
+            showConfirmButton: true,
+        });
+        return;
+    }
+    
+    const data = JSON.parse(sessionStorage.getItem('detailProduk'));
+    const rentalData = {
+        'id_pengguna' : await getUserId(),
+        'id_produk' : data.produk_id,
+        'nama_produk' : data.nama_produk,
+        'harga' : data.biaya_sewa,
+        'durasi' : parseInt(document.getElementById('durasiSewa').value),
+        'tanggal_peminjaman' : document.getElementById('tanggalSewa').value,
+        'tanggal_pengembalian' : document.getElementById('tanggalPengembalian').value,
+        'biaya_sewa' : parseInt(document.getElementById('cost').textContent.replace('Rp', '').replace(/\./g, ''))
+    };
+
+    localStorage.setItem('rentalData', JSON.stringify(rentalData));
+
+    window.location.href = '/confirm?page=detail';
+}
+
 window.tambahWaktuPeminjaman = tambahWaktuPeminjaman;
 window.kurangiWaktuPeminjaman = kurangiWaktuPeminjaman;
 window.updateDurasiPeminjaman = updateDurasiPeminjaman;
 window.addToCart = addToCart;
 window.updateCost = updateCost;
+window.currentDate = currentDate;
+window.returnDate = returnDate;
+window.sendRentalData = sendRentalData;

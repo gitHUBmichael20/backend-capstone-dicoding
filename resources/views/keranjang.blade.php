@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container mt-4" id="container">
-        <h1 class="mb-4">Keranjang Belanja</h1>
+        <h1 class="mb-4">Keranjang Peminjaman</h1>
 
         {{-- <div class="alert alert-info" id="keranjangKosong">
             Keranjang belanja Anda kosong. <a href="{{ route('landing') }}" class="alert-link">Kembali berbelanja</a>.
@@ -48,7 +48,7 @@
                     <a href="{{ route('landing') }}" class="btn btn-secondary">Lanjutkan Belanja</a>
                 </div>
                 <div>
-                    <button class="btn btn-success" id="btnCheckout">Checkout</button>
+                    <button type="button" class="btn btn-success" id="btnCheckout" onclick="insertDataToLocalStorage()">Checkout</button>
                 </div>
             </div>
         </div>

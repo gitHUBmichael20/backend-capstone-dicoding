@@ -23,7 +23,9 @@ Route::get('/detail_produk/{id}', function () {
 Route::get('/keranjang', function () {
     return view('keranjang');
 })->name('keranjang');
-
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard')->middleware('auth:admin');
+Route::get('/confirm', function () {
+    return view('confirm');
+})->name('confirm');

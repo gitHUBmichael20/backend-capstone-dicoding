@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/landing.js',
                 'resources/js/keranjang.js',
                 'resources/js/login.js',
+                'resources/js/confirm.js',
             ],
             refresh: true,
         }),

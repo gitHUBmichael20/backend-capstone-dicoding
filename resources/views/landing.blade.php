@@ -58,6 +58,7 @@
                         <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                         <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                         <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
+                        <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
                     </nav>
 
                     <!-- Desktop Actions -->
@@ -67,7 +68,7 @@
                         </a>
                         <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                            <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" id="infoDataCart"></span>
                         </a>
                         @if(auth()->check())
                         <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
