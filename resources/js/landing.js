@@ -4,11 +4,12 @@ window.Swal = Swal;
 
 async function fetchProduk() {
     try {
-        // Ambil nilai filter dari elemen
+        // Ambil nilai filter dan pencarian
         const kategori = document.getElementById('filter-kategori').value;
         const hargaMin = document.getElementById('harga-min').value;
         const hargaMax = document.getElementById('harga-max').value;
         const sort = document.getElementById('sort-option').value;
+        const search = document.getElementById('search-input').value; // Ambil nilai pencarian
 
         // Buat query string untuk parameter filter
         const params = new URLSearchParams();
@@ -16,6 +17,7 @@ async function fetchProduk() {
         if (hargaMin) params.append('harga_min', hargaMin);
         if (hargaMax) params.append('harga_max', hargaMax);
         if (sort) params.append('sort', sort);
+        if (search) params.append('search', search); // Tambahkan parameter pencarian
 
         // Kirim permintaan ke API dengan parameter filter
         const response = await fetch(`/api/produk?${params.toString()}`);
@@ -72,12 +74,30 @@ async function fetchProduk() {
         });
 
         if (data.length === 0) {
-            produkContainer.innerHTML = '<p class="text-gray-600 text-center">Belum ada produk yang tersedia.</p>';
+            produkContainer.innerHTML = '<p class="text-gray-600 text-center">Tidak ada produk yang ditemukan.</p>';
         }
     } catch (error) {
         console.error('Gagal mengambil data produk:', error);
     }
 }
+
+// Event listener untuk filter, sorting, dan pencarian
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProduk(); // Panggil saat halaman dimuat
+
+    // Filter Kategori
+    document.getElementById('filter-kategori').addEventListener('change', fetchProduk);
+
+    // Filter Harga
+    document.getElementById('harga-min').addEventListener('input', fetchProduk);
+    document.getElementById('harga-max').addEventListener('input', fetchProduk);
+
+    // Sorting
+    document.getElementById('sort-option').addEventListener('change', fetchProduk);
+
+    // Pencarian langsung
+    document.getElementById('search-input').addEventListener('input', fetchProduk);
+});
 
 // Tambahkan event listener untuk filter dan sorting
 document.addEventListener('DOMContentLoaded', () => {

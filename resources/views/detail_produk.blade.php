@@ -16,36 +16,18 @@
     <header class="bg-white shadow-md sticky top-0 z-40">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <a href="/" class="text-2xl font-bold text-emerald-600">SatoeRental</a>
+                <a href="/" class="text-2xl font-bold text-emerald-600">PinjamSatoe</a>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                     <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                     <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
+                    <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
                 </nav>
-
-                <!-- Desktop Actions -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
-                        <i class="fas fa-search"></i>
-                    </a>
                     <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                     </a>
-                    @if(auth()->check())
-                        <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
-                    @else
-                        <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
-                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
-                    @endif
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-gray-600" id="open-menu">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
             </div>
         </div>
     </header>

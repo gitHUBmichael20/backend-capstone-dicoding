@@ -6,9 +6,6 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenggunaController;
 
 Route::get('/user', [AuthController::class, 'apiUser'])->middleware('auth:sanctum');

@@ -40,9 +40,6 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                     </svg>
                 </a>
-                <a href="#" class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-                    Learn more
-                </a>
             </div>
         </div>
     </section>
@@ -51,7 +48,7 @@
         <header class="bg-white shadow-md sticky top-0 z-40">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
-                    <a href="/" class="text-2xl font-bold text-emerald-600">SatoeRental</a>
+                    <a href="/" class="text-2xl font-bold text-emerald-600">PinjamSatoe</a>
 
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex space-x-8">
@@ -63,9 +60,6 @@
 
                     <!-- Desktop Actions -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
-                            <i class="fas fa-search"></i>
-                        </a>
                         <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" id="infoDataCart"></span>
@@ -74,7 +68,7 @@
                         <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
                     @else
                         <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
-                        <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                        <a href="/signup" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
                     @endif
                     </div>
 
@@ -89,6 +83,9 @@
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Produk Untuk Disewa</h1>
+            <div class="mb-6">
+                <input type="text" id="search-input" placeholder="Cari produk..." class="w-full md:w-1/2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
             <div id="user-data" class="mb-6"></div>
 
             <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
@@ -242,7 +239,7 @@
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div>
-                        <h3 class="text-xl font-bold mb-4">SatoeRental</h3>
+                        <h3 class="text-xl font-bold mb-4">PinjamSatoe</h3>
                         <p class="text-gray-400 mb-4">Solusi praktis untuk kebutuhan peralatan rumah tangga Anda. Sewa alat berkualitas dengan harga terjangkau.</p>
                         <div class="flex space-x-4">
                             <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
@@ -287,7 +284,7 @@
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-envelope mt-1 mr-2 text-emerald-400"></i>
-                                <span class="text-gray-400">info@SatoeRental.com</span>
+                                <span class="text-gray-400">info@PinjamSatoe.com</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-clock mt-1 mr-2 text-emerald-400"></i>
@@ -300,7 +297,7 @@
                 <hr class="border-gray-700 my-8">
 
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 SatoeRental. Hak Cipta Dilindungi.</p>
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 PinjamSatoe. Hak Cipta Dilindungi.</p>
                     <div class="flex space-x-6">
                         <a href="#" class="text-gray-400 hover:text-white transition">Syarat & Ketentuan</a>
                         <a href="#" class="text-gray-400 hover:text-white transition">Kebijakan Privasi</a>
@@ -310,25 +307,36 @@
         </footer>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div class="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 hidden" id="mobile-menu">
-            <div class="flex justify-end p-4">
-                <button class="text-white text-2xl" id="close-menu">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="flex flex-col items-center justify-center h-full space-y-8 text-xl">
-                <a href="/" class="text-white hover:text-emerald-400 transition">Beranda</a>
-                <a href="/categories" class="text-white hover:text-emerald-400 transition">Kategori</a>
-                <a href="/products" class="text-emerald-400 font-medium transition">Produk</a>
-                <a href="/about" class="text-white hover:text-emerald-400 transition">Tentang Kami</a>
-                <a href="/contact" class="text-white hover:text-emerald-400 transition">Kontak</a>
-                <div class="pt-6 border-t border-gray-700 flex flex-col items-center space-y-4 w-1/2">
+        <div class="fixed inset-0 bg-white z-50 hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4">
+                <!-- Header with Logo and Close Button -->
+                <div class="flex justify-between items-center">
+                    <a href="/" class="text-2xl font-bold text-emerald-600">PinjamSatoe</a>
+                    <button class="text-gray-600 text-xl" id="close-menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex flex-col space-y-4 mt-6">
+                    <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
+                    <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
+                    <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
+                    <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
+                </nav>
+                <!-- Actions -->
+                <div class="flex flex-col space-y-4 mt-6">
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" id="mobile-infoDataCart">0</span>
+                        </a>
+                    </div>
                     @if(auth()->check())
-                    <button id="mobile-logout" class="bg-emerald-600 text-white hover:text-emerald-400 transition w-full text-center">Logout</button>
-                @else
-                    <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
-                    <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
-                @endif
+                        <button id="mobile-logout" class="bg-emerald-600 text-black px-4 rounded-md hover:bg-emerald-700 transition text-left">Logout</button>
+                    @else
+                        <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
+                        <a href="/signup" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                    @endif
                 </div>
             </div>
         </div>

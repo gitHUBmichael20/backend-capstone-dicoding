@@ -13,12 +13,12 @@ class ProdukController extends Controller
     public function index(Request $request)
     {
         $query = Produk::query();
-
+    
         // Filter berdasarkan kategori
         if ($request->has('kategori') && $request->kategori !== '') {
             $query->where('kategori', $request->kategori);
         }
-
+    
         // Filter berdasarkan harga
         if ($request->has('harga_min') && $request->harga_min !== '') {
             $query->where('biaya_sewa', '>=', $request->harga_min);
@@ -26,7 +26,12 @@ class ProdukController extends Controller
         if ($request->has('harga_max') && $request->harga_max !== '') {
             $query->where('biaya_sewa', '<=', $request->harga_max);
         }
-
+    
+        // Filter pencarian berdasarkan nama produk
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('nama_produk', 'like', '%' . $request->search . '%');
+        }
+    
         // Sorting
         if ($request->has('sort') && $request->sort !== '') {
             switch ($request->sort) {
@@ -44,18 +49,18 @@ class ProdukController extends Controller
                     $query->orderBy('created_at', 'desc'); // Default sorting
             }
         }
-
+    
         $produk = $query->get();
-
+    
         // Tambahkan gambar_url ke setiap produk
         $produk->map(function ($item) {
             $item->gambar_url = $item->gambar_produk ? asset($item->gambar_produk) : asset('storage/produk/no_image.png');
             return $item;
         });
-
+    
         return response()->json($produk);
     }
-
+    
     public function store(Request $request)
     {
         $validated = $request->validate([

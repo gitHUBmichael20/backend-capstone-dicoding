@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Session\Middleware\StartSession::class,
         ]);
         $middleware->alias([
-            'check.api.token' => \App\Http\Middleware\CheckApiToken::class,
+            'check.api.token' => CheckApiToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

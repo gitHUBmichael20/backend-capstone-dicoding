@@ -6,9 +6,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                //"resources/css/app.css",
-                //"resources/js/app.js",
-                //"resources/js/admin_analytics.js", // Tambahkan file ini
+                "resources/js/admin_analytics.js", // Tambahkan file ini
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/detail_produk.js',
