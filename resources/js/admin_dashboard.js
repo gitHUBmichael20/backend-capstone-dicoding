@@ -119,36 +119,33 @@ function hideUserForm() {
 
 // Handle Product Form Submission
 document.getElementById('product-crud-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('product-id').value;
-    const formData = new FormData();
-    formData.append('nama_produk', document.getElementById('nama_produk').value);
-    formData.append('deskripsi', document.getElementById('deskripsi').value);
-    formData.append('stok', document.getElementById('stok').value);
-    formData.append('biaya_sewa', document.getElementById('biaya_sewa').value);
-    formData.append('kategori', document.getElementById('kategori').value);
-    const image = document.getElementById('gambar_produk').files[0];
-    if (image) formData.append('gambar_produk', image);
+  e.preventDefault();
+  const id = document.getElementById('product-id').value;
+  const formData = new FormData();
+  formData.append('nama_produk', document.getElementById('nama_produk').value);
+  formData.append('deskripsi', document.getElementById('deskripsi').value);
+  formData.append('stok', parseInt(document.getElementById('stok').value));
+  formData.append('biaya_sewa', parseInt(document.getElementById('biaya_sewa').value));
+  formData.append('kategori', document.getElementById('kategori').value);
+  const image = document.getElementById('gambar_produk').files[0];
+  if (image) formData.append('gambar_produk', image);
+  if (id) formData.append('_method', 'PUT');
 
-    try {
-        const url = id ? `/api/produk/${id}` : '/api/produk';
-        const method = id ? 'PUT' : 'POST';
-        const response = await axios({
-            method,
-            url,
-            data: formData,
-            headers: {
-                'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`,
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        Swal.fire('Success', id ? 'Product updated successfully!' : 'Product created successfully!', 'success');
-        hideProductForm();
-        fetchProducts();
-    } catch (error) {
-        console.error('Error saving product:', error);
-        Swal.fire('Error', 'Failed to save product.', 'error');
-    }
+  try {
+      const url = id ? `/api/admin/produk/${id}` : '/api/admin/produk'; // Perbaiki URL
+      const response = await axios.post(url, formData, {
+          headers: {
+              'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`,
+              'Content-Type': 'multipart/form-data'
+          }
+      });
+      Swal.fire('Success', id ? 'Product updated successfully!' : 'Product created successfully!', 'success');
+      hideProductForm();
+      fetchProducts();
+  } catch (error) {
+      console.error('Error saving product:', error.response ? error.response.data : error.message);
+      Swal.fire('Error', 'Failed to save product: ' + (error.response ? error.response.data.message : error.message), 'error');
+  }
 });
 
 // Handle User Form Submission
@@ -188,17 +185,17 @@ document.getElementById('user-crud-form').addEventListener('submit', async (e) =
 
 // Edit Product
 async function editProduct(id) {
-    try {
-        const response = await axios.get(`/api/produk/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`
-            }
-        });
-        showProductForm('edit', response.data);
-    } catch (error) {
-        console.error('Error fetching product:', error);
-        Swal.fire('Error', 'Failed to load product data.', 'error');
-    }
+  try {
+      const response = await axios.get(`/api/admin/produk/${id}`, { // Perbaiki URL
+          headers: {
+              'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`
+          }
+      });
+      showProductForm('edit', response.data);
+  } catch (error) {
+      console.error('Error fetching product:', error);
+      Swal.fire('Error', 'Failed to load product data.', 'error');
+  }
 }
 
 // Edit User
@@ -218,29 +215,29 @@ async function editUser(id) {
 
 // Delete Product
 async function deleteProduct(id) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'This product will be deleted permanently!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            try {
-                await axios.delete(`/api/produk/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`
-                    }
-                });
-                Swal.fire('Deleted', 'Product has been deleted.', 'success');
-                fetchProducts();
-            } catch (error) {
-                console.error('Error deleting product:', error);
-                Swal.fire('Error', 'Failed to delete product.', 'error');
-            }
-        }
-    });
+  Swal.fire({
+      title: 'Are you sure?',
+      text: 'This product will be deleted permanently!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+  }).then(async (result) => {
+      if (result.isConfirmed) {
+          try {
+              await axios.delete(`/api/admin/produk/${id}`, { // Perbaiki URL
+                  headers: {
+                      'Authorization': `Bearer ${document.querySelector('meta[name="api-token"]').getAttribute('content')}`
+                  }
+              });
+              Swal.fire('Deleted', 'Product has been deleted.', 'success');
+              fetchProducts();
+          } catch (error) {
+              console.error('Error deleting product:', error);
+              Swal.fire('Error', 'Failed to delete product.', 'error');
+          }
+      }
+  });
 }
 
 // Delete User

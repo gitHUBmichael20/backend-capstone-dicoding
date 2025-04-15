@@ -30,6 +30,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/produk', [ProdukController::class, 'store']);
     Route::get('/produk/{id}', [ProdukController::class, 'show']);
     Route::put('/produk/{id}', [ProdukController::class, 'update']);
+    Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
     
     // Users
     Route::get('/pengguna', [PenggunaController::class, 'index']);
@@ -41,4 +42,3 @@ Route::prefix('admin')->group(function () {
     // Loans
     Route::get('/peminjaman', [PeminjamanController::class, 'index']);
 });
-Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);

@@ -54,22 +54,19 @@ class ProdukController extends Controller
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'stok' => 'required|integer|min:0',
-            'biaya_sewa' => 'required|numeric|min:0',
-            'kategori' => 'required|string',
+            'biaya_sewa' => 'required|integer|min:0', // Ubah menjadi integer
+            'kategori' => 'required|in:Peralatan Dapur,Peralatan Kebersihan,Perabotan,Elektronik,Dekorasi', // Tambahkan validasi enum
             'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+    
         $data = $request->all();
         if ($request->hasFile('gambar_produk')) {
             $file = $request->file('gambar_produk');
-            // Buat nama file unik dengan timestamp
             $fileName = time() . '_' . $file->getClientOriginalName();
-            // Simpan file di direktori produk
             $file->storeAs('produk', $fileName, 'public');
-            // Simpan hanya nama file di database
             $data['gambar_produk'] = $fileName;
         }
-
+    
         $produk = Produk::create($data);
         return response()->json(['message' => 'Product created successfully', 'data' => $produk], 201);
     }
@@ -82,34 +79,34 @@ class ProdukController extends Controller
 
     public function update(Request $request, $id)
     {
-        $produk = Produk::findOrFail($id);
-
-        $request->validate([
-            'nama_produk' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'stok' => 'required|integer|min:0',
-            'biaya_sewa' => 'required|numeric|min:0',
-            'kategori' => 'required|string',
-            'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $data = $request->all();
-        if ($request->hasFile('gambar_produk')) {
-            if ($produk->gambar_produk) {
-                // Hapus file lama dari direktori produk
-                Storage::disk('public')->delete('produk/' . $produk->gambar_produk);
+        try {
+            $produk = Produk::findOrFail($id);
+    
+            $request->validate([
+                'nama_produk' => 'required|string|max:255',
+                'deskripsi' => 'nullable|string',
+                'stok' => 'required|integer|min:0',
+                'biaya_sewa' => 'required|integer|min:0', // Ubah menjadi integer
+                'kategori' => 'required|in:Peralatan Dapur,Peralatan Kebersihan,Perabotan,Elektronik,Dekorasi', // Tambahkan validasi enum
+                'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+    
+            $data = $request->all();
+            if ($request->hasFile('gambar_produk')) {
+                if ($produk->gambar_produk && Storage::disk('public')->exists('produk/' . $produk->gambar_produk)) {
+                    Storage::disk('public')->delete('produk/' . $produk->gambar_produk);
+                }
+                $file = $request->file('gambar_produk');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('produk', $fileName, 'public');
+                $data['gambar_produk'] = $fileName;
             }
-            $file = $request->file('gambar_produk');
-            // Buat nama file unik dengan timestamp
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            // Simpan file di direktori produk
-            $file->storeAs('produk', $fileName, 'public');
-            // Simpan hanya nama file di database
-            $data['gambar_produk'] = $fileName;
+    
+            $produk->update($data);
+            return response()->json(['message' => 'Product updated successfully', 'data' => $produk]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to update product: ' . $e->getMessage()], 500);
         }
-
-        $produk->update($data);
-        return response()->json(['message' => 'Product updated successfully', 'data' => $produk]);
     }
 
     public function destroy($id)
