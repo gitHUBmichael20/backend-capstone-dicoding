@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/keranjang.js',
                 'resources/js/login.js',
                 'resources/js/confirm.js',
+                'resources/js/admin_dashboard.js',
             ],
             refresh: true,
         }),

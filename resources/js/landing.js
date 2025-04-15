@@ -4,22 +4,19 @@ window.Swal = Swal;
 
 async function fetchProduk() {
     try {
-        // Ambil nilai filter dan pencarian
         const kategori = document.getElementById('filter-kategori').value;
         const hargaMin = document.getElementById('harga-min').value;
         const hargaMax = document.getElementById('harga-max').value;
         const sort = document.getElementById('sort-option').value;
-        const search = document.getElementById('search-input').value; // Ambil nilai pencarian
+        const search = document.getElementById('search-input').value;
 
-        // Buat query string untuk parameter filter
         const params = new URLSearchParams();
         if (kategori) params.append('kategori', kategori);
         if (hargaMin) params.append('harga_min', hargaMin);
         if (hargaMax) params.append('harga_max', hargaMax);
         if (sort) params.append('sort', sort);
-        if (search) params.append('search', search); // Tambahkan parameter pencarian
+        if (search) params.append('search', search);
 
-        // Kirim permintaan ke API dengan parameter filter
         const response = await fetch(`/api/produk?${params.toString()}`);
         const data = await response.json();
         const produkContainer = document.getElementById('containerProduk');

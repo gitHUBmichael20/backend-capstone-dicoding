@@ -70,20 +70,14 @@ function displayProduk(data) {
         document.getElementById("stokProduk").classList.add('text-red-600');
     }
 
-    if (data && data.gambar_url) {
-        imgElement.src = data.gambar_url;
-        imgElement.alt = data.nama_produk;
-        
-        imgElement.onerror = function() {
-            console.log('Gambar gagal dimuat, menggunakan fallback');
-            this.src = '/storage/produk/no_image.png';
-            this.classList.replace('object-scale-down', 'object-cover');
-            this.onerror = null; 
-        };
-    } else {
-        imgElement.src = '/storage/produk/no_image.png';
-        imgElement.alt = 'Produk';
-    }
+    imgElement.src = data.gambar_produk ? `/storage/produk/${data.gambar_produk}` : '/storage/produk/no_image.png';
+    imgElement.alt = data.nama_produk;
+    imgElement.onerror = function() {
+        console.log('Gambar gagal dimuat, menggunakan fallback');
+        this.src = '/storage/produk/no_image.png';
+        this.classList.replace('object-scale-down', 'object-cover');
+        this.onerror = null;
+    };
 }
 
 function tambahWaktuPeminjaman() {

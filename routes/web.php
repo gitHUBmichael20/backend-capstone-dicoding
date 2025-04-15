@@ -29,3 +29,6 @@ Route::get('/admin/dashboard', function () {
 Route::get('/confirm', function () {
     return view('confirm');
 })->name('confirm');
+// Route::get('/about', function () {
+//     return view('about');
+// })->name('about');

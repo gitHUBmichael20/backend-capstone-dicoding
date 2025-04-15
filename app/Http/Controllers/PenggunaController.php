@@ -2,52 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
 {
-
-    // ambil semua data pengguna
-    public function index(Request $request)
+    public function index()
     {
-        // Increase memory limit temporarily
-        ini_set('memory_limit', '512M');
-        set_time_limit(300); // 5 minutes max execution time
+        $pengguna = Pengguna::all();
+        return response()->json($pengguna);
+    }
 
-        try {
-            // Use a raw query to minimize memory overhead
-            $query = DB::table('pengguna')
-                ->select(
-                    'pengguna_id',
-                    'nama_pengguna',
-                    'alamat',
-                    'nomor_telepon',
-                    'email',
-                    'created_at',
-                    'updated_at'
-                );
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_pengguna' => 'required|string|max:255',
+            'email' => 'required|email|unique:pengguna,email',
+            'nomor_telepon' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string',
+            'password' => 'required|string|min:6',
+        ]);
 
-            // Optional filtering if needed
-            if ($request->has('filter')) {
-                // Add any specific filtering logic if required
-            }
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $pengguna = Pengguna::create($data);
 
-            // Retrieve data
-            $pengguna = $query->get();
+        return response()->json(['message' => 'User created successfully', 'data' => $pengguna], 201);
+    }
 
-            return response()->json([
-                'success' => true,
-                'total_records' => $pengguna->count(),
-                'data' => $pengguna
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan server',
-                'error' => $e->getMessage()
-            ], 500);
+    public function show($id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+        return response()->json($pengguna);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+
+        $request->validate([
+            'nama_pengguna' => 'required|string|max:255',
+            'email' => 'required|email|unique:pengguna,email,' . $id . ',pengguna_id',
+            'nomor_telepon' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $data = $request->all();
+        if ($request->has('password') && !empty($request->password)) {
+            $data['password'] = bcrypt($request->password);
+        } else {
+            unset($data['password']);
         }
+
+        $pengguna->update($data);
+        return response()->json(['message' => 'User updated successfully', 'data' => $pengguna]);
+    }
+
+    public function destroy($id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+        $pengguna->delete();
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }
