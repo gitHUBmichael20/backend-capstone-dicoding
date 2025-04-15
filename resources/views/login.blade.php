@@ -6,37 +6,26 @@
   <title>SatoePinjam - Masuk</title>
   <link rel="stylesheet" href="{{ asset('css/login-singup.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/login.js'])
 </head>
 <body>
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                icon: 'success',
-                title: "Berhasil membuat akun! Silahkan login.",
-                showConfirmButton: false,
-                timer: 2500
-            });
-        });
-    </script> --}}
-
-        @if (session('success'))
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
+    @if (session('failed'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
-                    icon: 'success',
-                    title: "{{ session('success') }}",
+                    icon: 'error',
+                    title: "{{ session('failed') }}",
                     showConfirmButton: false,
-                    timer: 2500
+                    timer: 1500
                 });
             });
-            </script>
-        @endif
+        </script>
+    @endif
 
   <div class="auth-container">
-    <!-- Left Panel (Login Form) -->
     <div class="auth-left-panel">
-      <a href="index.html" class="back-link">
+      <a href="/" class="back-link">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke SatoePinjam
       </a>
 
@@ -44,15 +33,15 @@
         <h1 class="modena-logo">SatoePinjam</h1>
       </div>
 
-      <!-- Sign In Form -->
       <div class="auth-form-container">
         <h2 class="auth-title">Masuk</h2>
 
-        <form method="POST" action="{{ url('/api/login') }}">
+        <form method="POST" action="{{ route('login.post') }}">
+          @csrf
           <div class="input-group">
             <div class="input-container">
               <i class="fa-solid fa-user input-icon"></i>
-              <input type="text" placeholder="Email atau No HP" class="input-field" name="email">
+              <input type="email" placeholder="Masukkan email anda" class="input-field" name="email">
             </div>
           </div>
 
@@ -68,19 +57,6 @@
 
           <button type="submit" class="auth-button">Masuk</button>
 
-          <!-- <div class="forgot-password">
-            <a href="#">lupa kata sandi Anda?</a>
-          </div>
-
-          <div class="separator">
-            <span>atau Masuk dengan</span>
-          </div>
-
-          <button type="button" class="social-button">
-            <img src="assets/images/google-icon.png" alt="Google" class="social-icon">
-            Google
-          </button> -->
-
           <div class="auth-footer">
             Belum memiliki akun? <a href="{{ route('signup') }}">Daftar</a>
           </div>
@@ -88,10 +64,7 @@
       </div>
     </div>
 
-    <!-- Right Panel (Kitchen Image) -->
-    <div class="auth-right-panel">
-      <!-- Background image will be added via CSS -->
-    </div>
+    <div class="auth-right-panel"></div>
   </div>
 </body>
-</html>
+</html> 

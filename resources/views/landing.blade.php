@@ -1,88 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="api-token" content="{{ session('api_token') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {{-- <script src="{{ asset('js/landing.js') }}"></script> --}}
     <title>Welcome To Pinjam Satoe</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/landing.js'])
 </head>
-
 <body>
-
-
-    {{-- <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Pinjam Satoe</span>
-            </a>
-            <button data-collapse-toggle="navbar-default" type="button"
-                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul
-                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                            aria-current="page">Home</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> --}}
-
-
-
-
-    <section
-        class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+    <section class="h-screen bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h1>
-            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Here at Flowbite we focus on
-                markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+            <h1 class="mb-4 text-3xl font-bold tracking-tight leading-none text-white md:text-4xl lg:text-5xl">Selamat datang, {{ auth()->user() ? auth()->user()->nama_pengguna ?? 'pengguna' : 'pengguna' }}</h1>
+            <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h2>
+            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+                Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
             </p>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <a href="#dashboard"
-                    class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                <a href="#dashboard" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                     Get started
-                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                     </svg>
                 </a>
-                <a href="#"
-                    class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
+                <a href="#" class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
                     Learn more
                 </a>
             </div>
@@ -98,10 +56,9 @@
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex space-x-8">
                         <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
-                        <a href="/categories" class="text-gray-600 hover:text-emerald-600 transition">Kategori</a>
                         <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                         <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
-                        <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
+                        <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
                     </nav>
 
                     <!-- Desktop Actions -->
@@ -109,16 +66,20 @@
                         <a href="/search" class="text-gray-600 hover:text-emerald-600 transition">
                             <i class="fas fa-search"></i>
                         </a>
-                        <a href="/cart" class="text-gray-600 hover:text-emerald-600 transition relative">
+                        <a href="{{ route('keranjang') }}" class="text-gray-600 hover:text-emerald-600 transition relative">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                            <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" id="infoDataCart"></span>
                         </a>
+                        @if(auth()->check())
+                        <button id="logout" class="bg-emerald-600 text-black py-2 px-4 rounded-md hover:bg-emerald-700 transition">Logout</button>
+                    @else
                         <a href="/login" class="text-gray-600 hover:text-emerald-600 transition">Masuk</a>
                         <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">Daftar</a>
+                    @endif
                     </div>
 
                     <!-- Mobile Menu Button -->
-                    <button class="md:hidden text-gray-600">
+                    <button class="md:hidden text-gray-600" id="open-menu">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -128,159 +89,141 @@
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Produk Untuk Disewa</h1>
+            <div id="user-data" class="mb-6"></div>
 
             <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
-                <!-- Filters Sidebar -->
-                <div class="lg:w-1/4">
-                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                        <h3 class="text-lg font-bold mb-4 text-gray-800">Filter Pencarian</h3>
+            <!-- Filters Sidebar -->
+            <div class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800">Filter Pencarian</h3>
 
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Kategori</label>
-                            <select class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <option value="">Semua Kategori</option>
-                                <option value="1">Peralatan Dapur</option>
-                                <option value="2">Peralatan Kebersihan</option>
-                                <option value="3">Perabotan</option>
-                                <option value="4">Elektronik</option>
-                                <option value="5">Dekorasi</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Harga Per Hari</label>
-                            <div class="flex items-center gap-2">
-                                <input type="number" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <span>-</span>
-                                <input type="number" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Ketersediaan</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Tersedia Sekarang</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Pengiriman Gratis</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <span>Promo</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 mb-2 font-medium">Rating</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-600">& Up</span>
-                                    </div>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-600">& Up</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <button class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition">
-                            Terapkan Filter
-                        </button>
+                    <!-- Filter Kategori -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Kategori</label>
+                        <select id="filter-kategori" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="">Semua Kategori</option>
+                            <option value="Peralatan Dapur">Peralatan Dapur</option>
+                            <option value="Peralatan Kebersihan">Peralatan Kebersihan</option>
+                            <option value="Perabotan">Perabotan</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Dekorasi">Dekorasi</option>
+                        </select>
                     </div>
-                </div>
 
-                <!-- Product List -->
-                <div class="lg:w-3/4">
-                    <div class="flex justify-between items-center mb-6">
-                        <p class="text-gray-600">Menampilkan 24 dari 156 produk</p>
-
-                        <div class="flex items-center space-x-2">
-                            <label class="text-gray-700">Urutkan:</label>
-                            <select class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                <option>Terpopuler</option>
-                                <option>Harga: Rendah ke Tinggi</option>
-                                <option>Harga: Tinggi ke Rendah</option>
-                                <option>Rating Tertinggi</option>
-                                <option>Terbaru</option>
-                            </select>
+                    <!-- Filter Harga Per Hari -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Harga Per Hari</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="harga-min" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <span>-</span>
+                            <input type="number" id="harga-max" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="containerProduk">
+                    <!-- Ketersediaan (Dikomentari) -->
+                    <!--
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Ketersediaan</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="filter-tersedia" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Tersedia Sekarang</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Pengiriman Gratis</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="filter-promo" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <span>Promo</span>
+                            </label>
+                        </div>
+                    </div>
+                    -->
 
-                        <!-- Product Card 1 -->
-                        {{-- <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                            <div class="relative">
-                                <img src="/api/placeholder/300/200" alt="Blender Phillips" class="w-full h-48 object-cover">
-                                <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">Promo</span>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-gray-800">Blender Phillips HR2157</h3>
-                                <div class="flex text-yellow-400 my-1">
+                    <!-- Rating (Dikomentari) -->
+                    <!--
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Rating</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span class="ml-1 text-gray-600 text-sm">(48)</span>
+                                    <i class="fas fa-star"></i>
                                 </div>
-                                <p class="text-sm text-gray-600 mb-2">Peralatan Dapur</p>
-                                <div class="flex justify-between items-center mt-3">
-                                    <p class="text-emerald-600 font-bold">Rp25.000/hari</p>
-                                    <button class="bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700 transition">+ Keranjang</button>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ml-1 text-gray-600">& Up</span>
                                 </div>
-                            </div>
-                        </div> --}}
-
-
-                    <!-- Pagination -->
-                    <div class="mt-8 flex justify-center">
-                        <nav class="flex items-center space-x-1">
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                            <a href="#" class="px-3 py-2 rounded-md bg-emerald-600 text-white">1</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">2</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">3</a>
-                            <span class="px-3 py-2 text-gray-500">...</span>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">8</a>
-                            <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </nav>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ml-1 text-gray-600">& Up</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
+                    -->
+
+                    <!-- Tombol Terapkan Filter dihapus karena filter akan otomatis diterapkan -->
                 </div>
             </div>
-        </main>
+
+            <!-- Product List -->
+            <div class="lg:w-3/4">
+                <div class="flex justify-between items-center mb-6">
+                    <p id="product-count" class="text-gray-600">Menampilkan 0 dari 0 produk</p>
+
+                    <div class="flex items-center space-x-2">
+                        <label class="text-gray-700">Urutkan:</label>
+                        <select id="sort-option" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="terpopuler">Terpopuler</option>
+                            <option value="price-low-high">Harga: Rendah ke Tinggi</option>
+                            <option value="price-high-low">Harga: Tinggi ke Rendah</option>
+                            <option value="newest">Terbaru</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="containerProduk" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                    <!-- Produk akan diisi via JS dari /api/produk -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-1">
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-3 py-2 rounded-md bg-emerald-600 text-white">1</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">2</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">3</a>
+                        <span class="px-3 py-2 text-gray-500">...</span>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-emerald-50 transition">8</a>
+                        <a href="#" class="px-3 py-2 rounded-md border border-gray-300 text-gray-500 hover:bg-emerald-50 transition">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+</main>
 
         <!-- Subscribe Section -->
         <section class="bg-emerald-100 py-12">
@@ -357,7 +300,7 @@
                 <hr class="border-gray-700 my-8">
 
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 SatoeRental. Hak Cipta Dilindungi.</p>
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 SatoeRental. Hak Cipta Dilindungi.</p>
                     <div class="flex space-x-6">
                         <a href="#" class="text-gray-400 hover:text-white transition">Syarat & Ketentuan</a>
                         <a href="#" class="text-gray-400 hover:text-white transition">Kebijakan Privasi</a>
@@ -380,44 +323,15 @@
                 <a href="/about" class="text-white hover:text-emerald-400 transition">Tentang Kami</a>
                 <a href="/contact" class="text-white hover:text-emerald-400 transition">Kontak</a>
                 <div class="pt-6 border-t border-gray-700 flex flex-col items-center space-y-4 w-1/2">
+                    @if(auth()->check())
+                    <button id="mobile-logout" class="bg-emerald-600 text-white hover:text-emerald-400 transition w-full text-center">Logout</button>
+                @else
                     <a href="/login" class="text-white hover:text-emerald-400 transition w-full text-center">Masuk</a>
                     <a href="/register" class="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition w-full text-center">Daftar</a>
+                @endif
                 </div>
             </div>
         </div>
     </section>
-
-    {{-- <footer class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
-        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-            <div class="sm:flex sm:items-center sm:justify-between">
-                <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-                </a>
-                <ul
-                    class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">About</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:underline">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-            <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
-                    href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
-        </div>
-    </footer> --}}
-
-
-
 </body>
-
 </html>

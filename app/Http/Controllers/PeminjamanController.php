@@ -1,45 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Models\DetailPeminjaman;
+use App\Models\Keranjang;
+use App\Models\Peminjaman;
+use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PeminjamanController extends Controller
 {
-    // ambil semua data peminjaman
-    public function index()
-    {
-        // Increase memory limit temporarily
-        ini_set('memory_limit', '512M');
-        set_time_limit(300); // 5 minutes max execution time
+    //
+    public function store(Request $request) {
+        // dd($request->all());
+        $data = $request->input('data');
+        // // dd($data);
+        // Log::info("Data yang diterima:", $request->all());
+        // if (!$request->has('data') || !is_array($request->input('data'))) {
+        //     return response()->json(['error' => 'Data tidak valid!'], 400);
+        // } else {
+        //     return response()->json(['success' => 'data valid']);
+        // }
 
         try {
-            // Use a raw query to minimize memory overhead
-            $peminjaman = DB::table('peminjaman')
-                ->select(
-                    'peminjaman_id',
-                    'pengguna_id',
-                    'tanggal_pinjam',
-                    'tanggal_kembali',
-                    'status',
-                    'created_at',
-                    'updated_at'
-                )
-                ->get();
+            DB::beginTransaction();
+            foreach ($data as $item) {
+                $peminjaman = Peminjaman::create([
+                    'pengguna_id' => $item['pengguna_id'],
+                    'tanggal_pinjam' => $item['tanggal_peminjaman'],
+                    'tanggal_kembali' => $item['tanggal_pengembalian'],
+                    'status' => $item['status']
+                ]);
+                DetailPeminjaman::create([
+                    'peminjaman_id' => $peminjaman->peminjaman_id,
+                    'produk_id' => $item['produk_id'],
+                    'jumlah' => $item['jumlah'],
+                ]);
+                $produkControlller = new ProdukController();
+                $produkControlller->decreaseStocks($item['produk_id']);
+                $keranjangController = new KeranjangController();
+                $keranjangController->deleteAll($item['pengguna_id']);
+            }
+            DB::commit();
+            return response()->json(['message' => 'Berhasil membuat peminjaman!']);
 
-            return response()->json([
-                'success' => true,
-                'total_records' => $peminjaman->count(),
-                'data' => $peminjaman
-            ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan server',
-                'error' => $e->getMessage()
-            ], 500);
+            DB::rollBack(); // Batalkan transaksi jika ada error
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
+
+        // return response()->json($data);
     }
 }
