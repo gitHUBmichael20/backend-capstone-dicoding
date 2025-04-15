@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\DetailPeminjaman;
 use App\Models\Keranjang;
 use App\Models\Peminjaman;

@@ -21,7 +21,7 @@ return new class extends Migration
                 'Perabotan',
                 'Elektronik',
                 'Dekorasi'
-            ])->nullable(false);            
+            ])->nullable(false);
             $table->text('deskripsi')->nullable();
             $table->integer('stok')->nullable(false);
             $table->integer('biaya_sewa')->nullable(false);

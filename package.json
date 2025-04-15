@@ -12,10 +12,11 @@
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.2.0",
         "postcss": "^8.5.3",
-        "tailwindcss": "^4.0.12",
+        "tailwindcss": "^4.0.15",
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "@tensorflow/tfjs": "^4.22.0"
         "sweetalert2": "^11.17.2"
     }
 }

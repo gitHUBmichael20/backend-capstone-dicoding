@@ -6,6 +6,10 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PenggunaController;
 
 Route::get('/user', [AuthController::class, 'apiUser'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']); // Bisa hapus kalau hanya web
@@ -22,4 +26,18 @@ Route::post('/peminjaman', [PeminjamanController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function () {
     // Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/admin/logout', [AuthController::class, 'adminLogout']);
+});
+
+Route::prefix('admin')->group(function () {
+    
+    // http://localhost:8000/api/admin/produk
+    Route::get('/produk', [ProdukController::class, 'index']); // ambil semua data produk
+    
+    // http://localhost:8000/api/admin/peminjaman
+    Route::get('/peminjaman', [PeminjamanController::class, 'index']); // ambil semua data peminjaman
+
+    // http://localhost:8000/api/admin/pengguna
+    Route::get('/pengguna', [PenggunaController::class, 'index']); // ambil semua data pengguna
+
+
 });
