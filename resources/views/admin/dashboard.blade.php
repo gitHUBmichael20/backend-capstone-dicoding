@@ -45,11 +45,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-section="inbox"
+                    <a href="#" data-section="product"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group nav-link">
                         <i
                             class="fas fa-envelope w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">product</span>
                     </a>
                 </li>
                 <li>
@@ -81,9 +81,9 @@
                 @include('admin.analytics')
             </div>
 
-            <!-- Inbox Section -->
-            <div id="inbox" class="content-section">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Inbox</h1>
+            <!-- product Section -->
+            <div id="product" class="content-section">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Product</h1>
                 <p class="text-gray-600 dark:text-gray-400">Check your messages and notifications here.</p>
             </div>
 

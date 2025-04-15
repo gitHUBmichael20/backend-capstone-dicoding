@@ -68,7 +68,7 @@
               </button>
             </div>
           </div>
-
+          <span>password minimal 8 huruf</span>
           <button type="submit" class="auth-button">Daftar</button>
 
           <div class="auth-footer">

@@ -35,6 +35,10 @@
 
       <div class="auth-form-container">
         <h2 class="auth-title">Masuk</h2>
+        <span>untuk login ke admin <br>
+          -email: admin1@gmail.com<br>
+          -password : password1
+        </span>
 
         <form method="POST" action="{{ route('login.post') }}">
           @csrf

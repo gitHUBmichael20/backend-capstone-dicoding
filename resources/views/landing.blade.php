@@ -31,7 +31,7 @@
             <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                 "PALUGADA" Apapun lu mau gw ada. Pinjam apapun disini</h2>
             <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
-                Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+                Website ini dapat memudahkan user untuk meminjam barang yang dibutuhkan sehari-hari, dengan alur prosedur peminjaman barang yang mudah dan fitur yang sangat membantu.
             </p>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                 <a href="#dashboard" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
@@ -52,7 +52,6 @@
 
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex space-x-8">
-                        <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                         <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
                         <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
                         <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
@@ -318,9 +317,8 @@
                 </div>
                 <!-- Navigation Links -->
                 <nav class="flex flex-col space-y-4 mt-6">
-                    <a href="/" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
                     <a href="/products" class="text-emerald-600 font-medium transition">Produk</a>
-                    <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a>
+                    {{-- <a href="/about" class="text-gray-600 hover:text-emerald-600 transition">Tentang Kami</a> --}}
                     <a href="/contact" class="text-gray-600 hover:text-emerald-600 transition">Riwayat Peminjaman</a>
                 </nav>
                 <!-- Actions -->
