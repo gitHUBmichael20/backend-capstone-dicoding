@@ -109,6 +109,23 @@ class ProdukController extends Controller
         }
     }
 
+    public function decrementStocks($idProduk)
+    {
+        $produk = Produk::find($idProduk);
+        if (!$produk) {
+            throw new \Exception('Produk tidak ditemukan');
+        }
+
+        if ($produk->stok <= 0) {
+            throw new \Exception('Stok produk sudah habis');
+        }
+
+        $produk->stok -= 1;
+        $produk->save();
+
+        return true;
+    }
+
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);

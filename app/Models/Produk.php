@@ -27,4 +27,16 @@ class Produk extends Model
     {
         return $this->hasMany(Keranjang::class, 'produk_id');
     }
+
+    public function decrementStocks()
+    {
+        if ($this->stok <= 0) {
+            throw new \Exception('Stok produk sudah habis');
+        }
+
+        $this->stok -= 1;
+        $this->save();
+
+        return true;
+    }
 }

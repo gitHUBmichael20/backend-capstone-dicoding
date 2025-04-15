@@ -5,6 +5,7 @@ use App\Models\DetailPeminjaman;
 use App\Models\Keranjang;
 use App\Models\Peminjaman;
 use App\Models\Produk;
+use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -38,7 +39,7 @@ class PeminjamanController extends Controller
                     'jumlah' => $item['jumlah'],
                 ]);
                 $produkControlller = new ProdukController();
-                $produkControlller->decreaseStocks($item['produk_id']);
+                $produkControlller->decrementStocks($item['produk_id']);
                 $keranjangController = new KeranjangController();
                 $keranjangController->deleteAll($item['pengguna_id']);
             }
